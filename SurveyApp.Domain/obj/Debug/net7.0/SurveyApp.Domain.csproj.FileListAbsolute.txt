@@ -1,0 +1,12 @@
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Domain\bin\Debug\net7.0\SurveyApp.Domain.deps.json
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Domain\bin\Debug\net7.0\SurveyApp.Domain.dll
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Domain\bin\Debug\net7.0\SurveyApp.Domain.pdb
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Domain\obj\Debug\net7.0\SurveyApp.Domain.csproj.AssemblyReference.cache
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Domain\obj\Debug\net7.0\SurveyApp.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Domain\obj\Debug\net7.0\SurveyApp.Domain.AssemblyInfoInputs.cache
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Domain\obj\Debug\net7.0\SurveyApp.Domain.AssemblyInfo.cs
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Domain\obj\Debug\net7.0\SurveyApp.Domain.csproj.CoreCompileInputs.cache
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Domain\obj\Debug\net7.0\SurveyApp.Domain.dll
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Domain\obj\Debug\net7.0\refint\SurveyApp.Domain.dll
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Domain\obj\Debug\net7.0\SurveyApp.Domain.pdb
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Domain\obj\Debug\net7.0\ref\SurveyApp.Domain.dll

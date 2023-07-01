@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "awQnYiNfs9jexVtRDr8lwdFeP2y9Po1TN8L70B/xY+JnYZ/1VV63i5bVzJeY+92ukCcE9yXLe0valZvXAoWUwg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\ayser\\source\\repos\\Survey-App\\SurveyApp.Domain\\SurveyApp.Domain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ayser\\.nuget\\packages\\mongodb.bson\\2.20.0\\mongodb.bson.2.20.0.nupkg.sha512",
+    "C:\\Users\\ayser\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\5.0.0\\system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

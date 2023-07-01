@@ -1,0 +1,15 @@
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Infrastructure\bin\Debug\net7.0\SurveyApp.Infrastructure.deps.json
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Infrastructure\bin\Debug\net7.0\SurveyApp.Infrastructure.dll
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Infrastructure\bin\Debug\net7.0\SurveyApp.Infrastructure.pdb
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Infrastructure\obj\Debug\net7.0\SurveyApp.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Infrastructure\obj\Debug\net7.0\SurveyApp.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Infrastructure\obj\Debug\net7.0\SurveyApp.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Infrastructure\obj\Debug\net7.0\SurveyApp.Infrastructure.AssemblyInfo.cs
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Infrastructure\obj\Debug\net7.0\SurveyApp.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Infrastructure\obj\Debug\net7.0\SurveyApp.Infrastructure.dll
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Infrastructure\obj\Debug\net7.0\refint\SurveyApp.Infrastructure.dll
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Infrastructure\obj\Debug\net7.0\SurveyApp.Infrastructure.pdb
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Infrastructure\obj\Debug\net7.0\ref\SurveyApp.Infrastructure.dll
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Infrastructure\bin\Debug\net7.0\SurveyApp.Domain.dll
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Infrastructure\bin\Debug\net7.0\SurveyApp.Domain.pdb
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.Infrastructure\obj\Debug\net7.0\SurveyApp.Infrastructure.csproj.CopyComplete
