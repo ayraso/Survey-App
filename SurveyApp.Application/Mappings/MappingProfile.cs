@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using SurveyApp.Application.DTOs.Requests.User;
 using SurveyApp.Application.DTOs.Responses.User;
 using SurveyApp.Domain.Entities.Users;
 using System;
@@ -15,6 +16,10 @@ namespace SurveyApp.Application.Mappings
         {
             // User Mappings
             CreateMap<User, UserDisplayResponse>();
+            CreateMap<UserCreateRequest, User>();
+            // gerekli mi bunlar bilmiyorum.
+            CreateMap<UserUpdateEmailRequest, User>();
+            CreateMap<UserUpdatePasswordRequest, User>();
         }
     }
 }

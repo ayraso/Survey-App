@@ -124,7 +124,7 @@ namespace SurveyApp.Infrastructure.Repositories
 
         public void UpdateField<TField>(string id, string fieldName, TField value)
         {
-            var filter = Builders<T>.Filter.Eq("_id", id);
+            var filter = Builders<T>.Filter.Eq("Id", id);
             var update = Builders<T>.Update.Set(fieldName, value);
             _collection
                        .UpdateOne(filter, update);
@@ -132,7 +132,7 @@ namespace SurveyApp.Infrastructure.Repositories
 
         public async Task UpdateFieldAsync<TField>(string id, string fieldName, TField value)
         {
-            var filter = Builders<T>.Filter.Eq("_id", id);
+            var filter = Builders<T>.Filter.Eq("Id", id);
             var update = Builders<T>.Update.Set(fieldName, value);
             await _collection
                              .UpdateOneAsync(filter, update);

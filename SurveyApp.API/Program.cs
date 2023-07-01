@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 // düzenlenecek
-builder.Services.AddSingleton<UserService>();
+builder.Services.AddSingleton<IUserService, UserService>();
 // MongoDB
 builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDB"));
 // AutoMapper

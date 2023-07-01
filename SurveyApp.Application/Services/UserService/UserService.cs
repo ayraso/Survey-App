@@ -108,5 +108,25 @@ namespace SurveyApp.Application.Services.UserService
             var user = users.SingleOrDefault();
             return user;
         }
+
+        public async Task<IEnumerable<User?>> GetAllUsersAsync()
+        {
+            return await _userRepository.GetAllAsync();
+        }
+
+        public IEnumerable<User?> GetAllUsers()
+        {
+            return _userRepository.GetAll();
+        }
+
+        public async Task DeleteUserAccountAsync(string UserId)
+        {
+            await _userRepository.DeleteByIdAsync(UserId);
+        }
+
+        public void DeleteUserAccount(string UserId)
+        {
+            _userRepository.DeleteById(UserId);
+        }
     }
 }
