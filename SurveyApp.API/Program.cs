@@ -1,5 +1,6 @@
 using SurveyApp.API.Models;
 using SurveyApp.Application.Mappings;
+using SurveyApp.Application.Services.SurveyService;
 using SurveyApp.Application.Services.UserService;
 using SurveyApp.Infrastructure.Data;
 
@@ -10,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // düzenlenecek
 builder.Services.AddSingleton<IUserService, UserService>();
+builder.Services.AddSingleton<ISurveyService, SurveyService>();
 // MongoDB
 builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDB"));
 // AutoMapper

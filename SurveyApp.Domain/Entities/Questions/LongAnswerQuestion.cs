@@ -5,15 +5,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace SurveyApp.Domain.Entities.Questions
 {
-    public class LongAnswerQuestion : IQuestion
+    public class LongAnswerQuestion : Question
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
-        public string Type { get; set; } = null!;
-        public string Text { get; set; } = null!;
+
+        [JsonConstructor]
+        public LongAnswerQuestion(IQuestion question) :base(question.Type, question.Text)
+        {
+        
+        }
     }
 }

@@ -8,12 +8,15 @@ using System.Threading.Tasks;
 
 namespace SurveyApp.Domain.Entities.Questions
 {
-    public class ShortAnswerQuestion : IQuestion
+    public class ShortAnswerQuestion : Question
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
-        public string Type { get; set; } = null!;
-        public string Text { get; set; } = null!;
+
+        public ShortAnswerQuestion(IQuestion question) : base(question.Type, question.Text)
+        {
+
+        }
     }
 }

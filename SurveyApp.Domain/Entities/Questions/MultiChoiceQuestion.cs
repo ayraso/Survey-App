@@ -9,16 +9,19 @@ using System.Text.Json.Serialization;
 
 namespace SurveyApp.Domain.Entities.Questions
 {
-    public class MultiChoiceQuestion : IQuestion
+    public class MultiChoiceQuestion : Question
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
-        public string Type { get; set; } = null!;
-        public string Text { get; set; } = null!;
 
         [BsonElement("Choices")]
         [JsonPropertyName("Choices")]
         public IList<string> Choices { get; set; } = null!;
+
+        public MultiChoiceQuestion(IQuestion question) : base(question.Type, question.Text)
+        {
+
+        }
     }
 }
