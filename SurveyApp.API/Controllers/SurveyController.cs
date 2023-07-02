@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SurveyApp.Application.DTOs.Requests.Survey;
 using SurveyApp.Application.Services.SurveyService;
 using SurveyApp.Application.Services.UserService;
 using SurveyApp.Domain.Entities.Surveys;
@@ -24,7 +25,7 @@ namespace SurveyApp.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateSurvey(Survey survey)
+        public async Task<IActionResult> CreateSurvey(SurveyCreateRequest survey)
         {
             await _surveyService.CreateSurvey(survey);
             return Ok();

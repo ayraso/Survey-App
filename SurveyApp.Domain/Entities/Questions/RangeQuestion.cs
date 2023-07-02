@@ -15,10 +15,10 @@ namespace SurveyApp.Domain.Entities.Questions
         public string? Id { get; set; }
         public string MinRange { get; set; } = "1";
         public string MaxRange { get; set; } = null!;
-
         public RangeQuestion(IQuestion question) : base(question.Type, question.Text)
         {
 
         }
+        
     }
 }

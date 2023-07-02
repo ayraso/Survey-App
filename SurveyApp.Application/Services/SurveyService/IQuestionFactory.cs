@@ -10,6 +10,6 @@ namespace SurveyApp.Application.Services.SurveyService
 {
     public interface IQuestionFactory : IFactory<IQuestion>
     {
-        IQuestion CreateQuestion(string questionType);
+        IQuestion CreateQuestion(IQuestion question);
     }
 }
