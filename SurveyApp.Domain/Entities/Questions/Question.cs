@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace SurveyApp.Domain.Entities.Questions
 {
+    [BsonKnownTypes(typeof(LongAnswerQuestion), typeof(ShortAnswerQuestion), typeof(RangeQuestion), typeof(MultiChoiceQuestion))]
     public class Question : IQuestion
     {
         public string Type { get; set; }

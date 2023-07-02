@@ -1,3 +1,5 @@
+using MongoDB.Bson.Serialization.Serializers;
+using MongoDB.Bson.Serialization;
 using SurveyApp.API.Models;
 using SurveyApp.Application.Mappings;
 using SurveyApp.Application.Services.SurveyService;
@@ -21,6 +23,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var objectSerializer = new ObjectSerializer(type => ObjectSerializer.DefaultAllowedTypes(type) || type.FullName.StartsWith("SurveyApp"));
+BsonSerializer.RegisterSerializer(objectSerializer);
 
 var app = builder.Build();
 

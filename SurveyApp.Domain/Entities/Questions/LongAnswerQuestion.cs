@@ -9,11 +9,11 @@ using System.Text.Json.Serialization;
 
 namespace SurveyApp.Domain.Entities.Questions
 {
+    [BsonDiscriminator("LongAnswerQuestion")]
     public class LongAnswerQuestion : Question
     {
-        public string? Id { get; set; } = ObjectId.GenerateNewId().ToString();
+        public string? Index { get; set; }
 
-        [JsonConstructor]
         public LongAnswerQuestion(IQuestion question) :base(question.Type, question.Text)
         {
         

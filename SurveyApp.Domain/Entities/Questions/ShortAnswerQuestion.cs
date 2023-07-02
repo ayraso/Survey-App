@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 
 namespace SurveyApp.Domain.Entities.Questions
 {
+    [BsonDiscriminator("ShortAnswerQuestion")]
     public class ShortAnswerQuestion : Question
     {
-        public string? Id { get; set; } = ObjectId.GenerateNewId().ToString();
+        public string? Index { get; set; }
 
         public ShortAnswerQuestion(IQuestion question) : base(question.Type, question.Text)
         {

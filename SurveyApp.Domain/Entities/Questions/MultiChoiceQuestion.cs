@@ -9,9 +9,10 @@ using System.Text.Json.Serialization;
 
 namespace SurveyApp.Domain.Entities.Questions
 {
+    [BsonDiscriminator("MultiChoiceQuestion")]
     public class MultiChoiceQuestion : Question
     {
-        public string? Id { get; set; } = ObjectId.GenerateNewId().ToString();
+        public string? Index { get; set; }
 
         [BsonElement("Choices")]
         [JsonPropertyName("Choices")]

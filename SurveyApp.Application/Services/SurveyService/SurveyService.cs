@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using SurveyApp.Application.DTOs.Requests.Survey;
 using SurveyApp.Application.DTOs.Responses.Survey;
+using SurveyApp.Application.Extensions;
 using SurveyApp.Domain.Entities.Questions;
 using SurveyApp.Domain.Entities.Surveys;
 using SurveyApp.Domain.Entities.Users;
@@ -52,7 +53,7 @@ namespace SurveyApp.Application.Services.SurveyService
                 Title = newSurvey.Title,
                 Description = newSurvey.Description,
                 CreatedAt = newSurvey.CreatedAt,
-                Questions = new List<Question>()
+                Questions = new List<IQuestion>()
             };
 
             // RangeQuestionCreateRequests elemanlarını Questions listesine ekle
@@ -61,6 +62,7 @@ namespace SurveyApp.Application.Services.SurveyService
                 foreach (var rangeQuestionCreateRequest in newSurvey.RangeQuestionCreateRequests)
                 {
                     var question = new RangeQuestion(rangeQuestionCreateRequest);
+                    question.Index = survey.GenerateQuestionId();
                     question.MinRange = rangeQuestionCreateRequest.MinRange;
                     question.MaxRange = rangeQuestionCreateRequest.MaxRange;
                     survey.Questions.Add(question);
@@ -73,6 +75,7 @@ namespace SurveyApp.Application.Services.SurveyService
                 foreach (var multiChoiceQuestionCreateRequest in newSurvey.MultiChoiceQuestionCreateRequests)
                 {
                     var question = new MultiChoiceQuestion(multiChoiceQuestionCreateRequest);
+                    question.Index = survey.GenerateQuestionId();
                     question.Choices = multiChoiceQuestionCreateRequest.Choices;
                     survey.Questions.Add(question);
                 }
@@ -84,6 +87,7 @@ namespace SurveyApp.Application.Services.SurveyService
                 foreach (var shortAnswerQuestionCreateRequest in newSurvey.ShortAnswerQuestionCreateRequests)
                 {
                     var question = new ShortAnswerQuestion(shortAnswerQuestionCreateRequest);
+                    question.Index = survey.GenerateQuestionId();
                     survey.Questions.Add(question);
                 }
             }
@@ -94,6 +98,7 @@ namespace SurveyApp.Application.Services.SurveyService
                 foreach (var longAnswerQuestionCreateRequest in newSurvey.LongAnswerQuestionCreateRequests)
                 {
                     var question = new LongAnswerQuestion(longAnswerQuestionCreateRequest);
+                    question.Index = survey.GenerateQuestionId();
                     survey.Questions.Add(question);
                 }
             }
