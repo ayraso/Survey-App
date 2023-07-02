@@ -12,7 +12,7 @@ namespace SurveyApp.Domain.Entities.Questions
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string? Id { get; set; }
+        public string? Id { get; set; } = ObjectId.GenerateNewId().ToString();
         public string MinRange { get; set; } = "1";
         public string MaxRange { get; set; } = null!;
         public RangeQuestion(IQuestion question) : base(question.Type, question.Text)

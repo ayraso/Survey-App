@@ -13,7 +13,7 @@ namespace SurveyApp.Domain.Entities.Questions
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string? Id { get; set; }
+        public string? Id { get; set; } = ObjectId.GenerateNewId().ToString();
 
         [JsonConstructor]
         public LongAnswerQuestion(IQuestion question) :base(question.Type, question.Text)

@@ -12,7 +12,6 @@ namespace SurveyApp.Domain.Entities.Questions
         public string Type { get; set; }
         public string Text { get; set; }
 
-        //[JsonConstructor]
         public Question(string type, string text)
         {
             Type = type;

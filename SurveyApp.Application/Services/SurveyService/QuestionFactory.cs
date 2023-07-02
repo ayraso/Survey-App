@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using SurveyApp.Application.DTOs.Requests.Survey;
 using SurveyApp.Domain.Entities.Questions;
 using System;
 using System.Collections.Generic;
@@ -15,18 +16,23 @@ namespace SurveyApp.Application.Services.SurveyService
         {
             this._mapper = mapper;
         }
-        public IQuestion CreateQuestion(IQuestion question)
+        public IQuestion CreateQuestion(IQuestion createRequest)
         {
-            switch (question.Type)
+            switch (createRequest.Type)
             {
                 case "Range":
-                    return _mapper.Map<RangeQuestion>(question);
+                    var rangeQuestion = _mapper.Map<RangeQuestion>(createRequest);
+                    rangeQuestion.MinRange = ((RangeQuestionCreateRequest)createRequest).MinRange;
+                    rangeQuestion.MaxRange = ((RangeQuestionCreateRequest)createRequest).MaxRange;
+                    return rangeQuestion;
                 case "MultiChoice":
-                    return _mapper.Map<MultiChoiceQuestion>(question);
-                case "LongAnswer":
-                    return _mapper.Map<LongAnswerQuestion>(question);
+                    var multiChoiceQuestion = _mapper.Map<MultiChoiceQuestion>(createRequest);
+                    multiChoiceQuestion.Choices = ((MultiChoiceQuestionCreateRequest)createRequest).Choices;
+                    return multiChoiceQuestion;
                 case "ShortAnswer":
-                    return _mapper.Map<ShortAnswerQuestion>(question);
+                    return _mapper.Map<ShortAnswerQuestion>(createRequest);
+                case "LongAnswer":
+                    return _mapper.Map<LongAnswerQuestion>(createRequest);
                 default:
                     throw new ArgumentException("Invalid question type.");
             }
