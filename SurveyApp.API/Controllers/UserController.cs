@@ -16,28 +16,88 @@ namespace SurveyApp.API.Controllers
            this._userService = userService;
         }
 
-        [HttpGet]
+        [HttpGet("Users/All")]
         public async Task<IEnumerable<User?>> GetUsersAsync()
         {
             return await _userService.GetAllUsersAsync();
         }
 
-        [HttpPost]
-        public async Task CreateNewUserAsync(UserCreateRequest userCreateRequest)
+        [HttpGet("Users/{userId}")] 
+        public async Task<User?> GetUser(string userId)
         {
-            await _userService.CreateUserAsync(userCreateRequest);
+            return await _userService.GetUserByIdAsync(userId);
         }
 
-        [HttpPut("{id}/Account")]
-        public async Task UpdateUserPasswordAsync(UserUpdatePasswordRequest userUpdatePasswordRequest)
+        [HttpPost("/SignIn")]
+        public async Task<IActionResult> CreateNewUser(UserCreateRequest userCreateRequest)
         {
-            await _userService.UpdateUserPasswordAsync(userUpdatePasswordRequest);
+            if(ModelState.IsValid)
+            {
+                bool isEmailReceived = await _userService.IsEmailRegisteredAsync(userCreateRequest.Email);
+                if (!isEmailReceived)
+                {
+                    await _userService.CreateUserAsync(userCreateRequest);
+                    return Ok();
+                }
+                return Conflict(new { message = $"Bu e-posta hesabına ait bir hesap zaten bulunmaktadır." });
+            }
+            return BadRequest();
         }
 
-        [HttpDelete("{id}/Account")] 
-        public async Task DeleteUserAccount(string id)
+        [HttpGet("/Account/{userId}/Info")]
+        public async Task<IActionResult> GetUserAccountInfo(string userId)
         {
-            await _userService.DeleteUserAccountAsync(id);
+            if (userId != null)
+            {
+                bool isUserExists = await _userService.IsUserExistsAsync(userId);
+                if (isUserExists)
+                {
+                    var user = await _userService.GetUserByIdAsync(userId);
+                    return Ok(user);
+                }
+                return NotFound(new {message = $"Böyle bir kullanıcı bulunamadı."});
+            }
+            return BadRequest();
         }
+
+        [HttpPut("/Account/{userId}/UpdatePassword")]
+        public async Task<IActionResult> UpdateUserPassword(UserUpdatePasswordRequest userUpdatePasswordRequest)
+        {
+            if (ModelState.IsValid)
+            {
+                await _userService.UpdateUserPasswordAsync(userUpdatePasswordRequest);
+                return Ok();
+            }
+            return BadRequest(ModelState);
+        }
+
+        [HttpPut("/Account/{userId}/UpdateEmail")]
+        public async Task<IActionResult> UpdateEmail(UserUpdateEmailRequest userUpdateEmailRequest)
+        {
+            if(ModelState.IsValid)
+            {
+                bool isEmailReceived = await _userService.IsEmailRegisteredAsync(userUpdateEmailRequest.Email);
+                if (!isEmailReceived)
+                {
+                    var userDisplayResponse = await _userService.UpdateUserEmailAsync(userUpdateEmailRequest);
+                    return Ok(userDisplayResponse);
+                }
+                return Conflict(new { message = $"Bu e-posta hesabına ait bir hesap zaten bulunmaktadır." });
+            }
+            return BadRequest(ModelState);
+        }
+
+
+        [HttpDelete("/Account/{userId}/Delete")] 
+        public async Task<IActionResult> DeleteUserAccount(string userId)
+        {
+            if(userId != null)
+            {
+                await _userService.DeleteUserAccountAsync(userId);
+                return Ok();    
+            }
+            return BadRequest();
+        }
+
     }
 }

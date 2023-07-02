@@ -1,4 +1,5 @@
-﻿using SurveyApp.Domain.Entities.Users;
+﻿using SurveyApp.Application.DTOs.Responses.User;
+using SurveyApp.Domain.Entities.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,10 @@ namespace SurveyApp.Application.Services.UserService
         IEnumerable<User?> GetAllUsers();
         Task DeleteUserAccountAsync(string UserId);
         void DeleteUserAccount(string UserId);
+        Task<User?> GetUserByIdAsync(string UserId);
+        User? GetUserById(string UserId);
+        Task<bool> IsUserExistsAsync(string UserId);
+        bool IsUserExists(string UserId);
+
     }
 }

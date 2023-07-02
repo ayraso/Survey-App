@@ -55,15 +55,15 @@ namespace SurveyApp.Application.Services.UserService
         public bool IsEmailRegistered(string email)
         {
             Expression<Func<User, bool>> predicate = u => u.Email == email;
-            var user = _userRepository.GetAllWithPredicate(predicate);
-            return user != null;
+            var users = _userRepository.GetAllWithPredicate(predicate);
+            return users.Any();
         }
 
         public async Task<bool> IsEmailRegisteredAsync(string email)
         {
             Expression<Func<User, bool>> predicate = u => u.Email == email;
-            var user = await _userRepository.GetAllWithPredicateAsync(predicate);
-            return user != null;
+            var users = await _userRepository.GetAllWithPredicateAsync(predicate);
+            return users.Any();
         }
 
         public UserDisplayResponse UpdateUserEmail(UserUpdateEmailRequest userUpdateEmailRequest)
@@ -127,6 +127,26 @@ namespace SurveyApp.Application.Services.UserService
         public void DeleteUserAccount(string UserId)
         {
             _userRepository.DeleteById(UserId);
+        }
+
+        public async Task<User?> GetUserByIdAsync(string UserId)
+        {
+            return await _userRepository.GetByIdAsync(UserId);
+        }
+
+        public User? GetUserById(string UserId)
+        {
+            return _userRepository.GetById(UserId);
+        }
+
+        public async Task<bool> IsUserExistsAsync(string UserId)
+        {
+            return await _userRepository.IsExistsAsync(UserId);
+        }
+
+        public bool IsUserExists(string UserId)
+        {
+            return _userRepository.IsExists(UserId);    
         }
     }
 }
