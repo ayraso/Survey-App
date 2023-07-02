@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Options;
+using SurveyApp.Domain.Entities.Questions;
 using SurveyApp.Domain.Entities.Surveys;
 using SurveyApp.Domain.Entities.Users;
 using SurveyApp.Infrastructure.Data;
@@ -20,6 +21,23 @@ namespace SurveyApp.Application.Services.SurveyService
         {
             _surveyRepository = new MongoDbRepository<Survey>(mongoDbSettings);
             _mapper = mapper;
+        }
+
+        public IQuestion CreateQuestion(IQuestion question)
+        {
+            switch (question.Type)
+            {
+                case "Range":
+                    return new RangeQuestion(question);
+                case "MultiChoice":
+                    return new MultiChoiceQuestion(question);
+                case "LongAnswer":
+                    return new LongAnswerQuestion(question);
+                case "ShortAnswer":
+                    return new ShortAnswerQuestion(question);
+                default:
+                    throw new ArgumentException("Invalid question type.");
+            }
         }
 
         public async Task CreateSurvey(Survey survey)

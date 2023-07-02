@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SurveyApp.Application.Services.SurveyService
 {
-    public interface ISurveyService
+    public interface ISurveyService : IQuestionFactory
     {
         Task CreateSurvey(Survey survey);
         Task<IEnumerable<Survey?>> GetAllSurveysAsync();
