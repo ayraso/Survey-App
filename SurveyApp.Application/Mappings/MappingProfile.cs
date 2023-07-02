@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using SurveyApp.Application.DTOs.Requests.Survey;
 using SurveyApp.Application.DTOs.Requests.User;
+using SurveyApp.Application.DTOs.Responses.Survey;
 using SurveyApp.Application.DTOs.Responses.User;
 using SurveyApp.Domain.Entities.Questions;
+using SurveyApp.Domain.Entities.Surveys;
 using SurveyApp.Domain.Entities.Users;
 using System;
 using System.Collections.Generic;
@@ -23,7 +25,7 @@ namespace SurveyApp.Application.Mappings
             CreateMap<UserUpdateEmailRequest, User>();
             CreateMap<UserUpdatePasswordRequest, User>();
 
-            // Survey Mappings
+            
             // Question Mappings
             CreateMap<RangeQuestionCreateRequest, RangeQuestion>();
             CreateMap<MultiChoiceQuestionCreateRequest, MultiChoiceQuestion>();
@@ -34,6 +36,10 @@ namespace SurveyApp.Application.Mappings
             CreateMap<IQuestion, MultiChoiceQuestion>();
             CreateMap<IQuestion, ShortAnswerQuestion>();
             CreateMap<IQuestion, LongAnswerQuestion>();
+
+
+            // Survey Mappings
+            CreateMap<Survey, SurveyDisplayResponse>();
         }
     }
 }

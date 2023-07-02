@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +14,7 @@ namespace SurveyApp.Domain.Entities.Questions
         public string Type { get; set; }
         public string Text { get; set; }
 
+        [JsonConstructor]
         public Question(string type, string text)
         {
             Type = type;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SurveyApp.Application.DTOs.Requests.Survey;
+using SurveyApp.Application.DTOs.Responses.Survey;
 using SurveyApp.Application.Services.SurveyService;
 using SurveyApp.Application.Services.UserService;
 using SurveyApp.Domain.Entities.Surveys;
@@ -19,16 +20,28 @@ namespace SurveyApp.API.Controllers
         }
 
         [HttpGet("Surveys/All")]
-        public async Task<IEnumerable<Survey?>> GetAllSurveys()
+        public async Task<IEnumerable<SurveyDisplayResponse?>> GetAllSurveys()
         {
             return await _surveyService.GetAllSurveysAsync();
         }
 
-        [HttpPost]
+        [HttpGet("Surveys/{Id}")]
+        public async Task<IActionResult> GetSurveyById(string surveyId)
+        {
+            var survey = await _surveyService.GetSurveyBySurveyIdAsync(surveyId);
+            return Ok(survey);
+        }
+
+
+        [HttpPost("Surveys/Create")]
         public async Task<IActionResult> CreateSurvey(SurveyCreateRequest survey)
         {
-            await _surveyService.CreateSurvey(survey);
-            return Ok();
+            if(ModelState.IsValid) 
+            {
+                await _surveyService.CreateSurveyAsync(survey);
+                return Ok();
+            }
+            return BadRequest();
         }
     }
 }

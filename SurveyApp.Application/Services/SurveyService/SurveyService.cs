@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Options;
 using SurveyApp.Application.DTOs.Requests.Survey;
+using SurveyApp.Application.DTOs.Responses.Survey;
 using SurveyApp.Domain.Entities.Questions;
 using SurveyApp.Domain.Entities.Surveys;
 using SurveyApp.Domain.Entities.Users;
@@ -28,7 +29,22 @@ namespace SurveyApp.Application.Services.SurveyService
             _mapper = mapper;
         }
 
-        public async Task CreateSurvey(SurveyCreateRequest newSurvey)
+        public void CreateSurvey(SurveyCreateRequest surveyCreateRequest)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string CreateSurveyAndReturnId(SurveyCreateRequest surveyCreateRequest)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> CreateSurveyAndReturnIdAsync(SurveyCreateRequest surveyCreateRequest)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task CreateSurveyAsync(SurveyCreateRequest newSurvey)
         {
             var survey = new Survey
             {
@@ -85,9 +101,36 @@ namespace SurveyApp.Application.Services.SurveyService
             await _surveyRepository.AddAsync(survey);
         }
 
-        public async Task<IEnumerable<Survey?>> GetAllSurveysAsync()
+        public IEnumerable<SurveyDisplayResponse?> GetAllSurveys()
         {
-            return await _surveyRepository.GetAllAsync();
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<SurveyDisplayResponse?>> GetAllSurveysAsync()
+        {
+            var surveys = await _surveyRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<SurveyDisplayResponse>>(surveys);
+        }
+
+        public SurveyDisplayResponse? GetSurveyBySurveyId(string surveyId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Survey?> GetSurveyBySurveyIdAsync(string surveyId)
+        {
+            var survey = await _surveyRepository.GetByIdAsync(surveyId);
+            return survey;
+        }
+
+        public IEnumerable<SurveyDisplayResponse?> GetSurveysByUserId(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<SurveyDisplayResponse?>> GetSurveysByUserIdAsync(string userId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
