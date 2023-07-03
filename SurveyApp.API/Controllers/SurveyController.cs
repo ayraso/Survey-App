@@ -20,18 +20,18 @@ namespace SurveyApp.API.Controllers
         }
 
         [HttpGet("Surveys/All")]
-        public async Task<IEnumerable<SurveyDisplayResponse?>> GetAllSurveys()
+        public async Task<IEnumerable<Survey?>> GetAllSurveys()
         {
-            return await _surveyService.GetAllSurveysAsync();
+            var surveys = await _surveyService.GetAllSurveysAsync();
+            return surveys;
         }
 
-        [HttpGet("Surveys/{Id}")]
-        public async Task<IActionResult> GetSurveyById(string surveyId)
+        [HttpGet("Surveys/{id}")]
+        public async Task<Survey?> GetSurveyById(string surveyId)
         {
-            var survey = await _surveyService.GetSurveyBySurveyIdAsync(surveyId);
-            return Ok(survey);
+            var survey = await _surveyService.GetSurveyByIdAsync(surveyId);
+            return survey;
         }
-
 
         [HttpPost("Surveys/Create")]
         public async Task<IActionResult> CreateSurvey(SurveyCreateRequest survey)

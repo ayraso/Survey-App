@@ -12,15 +12,9 @@ namespace SurveyApp.Application.Services.SurveyService
     public interface ISurveyService
     {
         Task CreateSurveyAsync(SurveyCreateRequest surveyCreeateRequest);
-        void CreateSurvey(SurveyCreateRequest surveyCreateRequest);
-        Task<string> CreateSurveyAndReturnIdAsync(SurveyCreateRequest surveyCreateRequest);
-        string CreateSurveyAndReturnId(SurveyCreateRequest surveyCreateRequest);
-        Task<IEnumerable<SurveyDisplayResponse?>> GetAllSurveysAsync();
-        IEnumerable<SurveyDisplayResponse?> GetAllSurveys();
-        Task<Survey?> GetSurveyBySurveyIdAsync(string surveyId);
-        SurveyDisplayResponse? GetSurveyBySurveyId(string surveyId);
-        Task<IEnumerable<SurveyDisplayResponse?>> GetSurveysByUserIdAsync(string userId);
-        IEnumerable<SurveyDisplayResponse?> GetSurveysByUserId(string userId);
+        
+        Task<IEnumerable<Survey?>> GetAllSurveysAsync();
+        Task<Survey?> GetSurveyByIdAsync(string surveyId);
 
     }
 }

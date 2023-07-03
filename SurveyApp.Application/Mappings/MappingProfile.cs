@@ -32,10 +32,10 @@ namespace SurveyApp.Application.Mappings
             CreateMap<ShortAnswerQuestionCreateRequest, ShortAnswerQuestion>();
             CreateMap<LongAnswerQuestionCreateRequest, LongAnswerQuestion>();
 
-            CreateMap<IQuestion, RangeQuestion>();
-            CreateMap<IQuestion, MultiChoiceQuestion>();
-            CreateMap<IQuestion, ShortAnswerQuestion>();
-            CreateMap<IQuestion, LongAnswerQuestion>();
+            CreateMap<Question, RangeQuestion>();
+            CreateMap<Question, MultiChoiceQuestion>();
+            CreateMap<Question, ShortAnswerQuestion>();
+            CreateMap<Question, LongAnswerQuestion>();
 
 
             // Survey Mappings

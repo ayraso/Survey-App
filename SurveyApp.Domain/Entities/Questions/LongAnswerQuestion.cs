@@ -13,10 +13,8 @@ namespace SurveyApp.Domain.Entities.Questions
     public class LongAnswerQuestion : Question
     {
         public string? Index { get; set; }
+        public string Type { get; set; } = null!;
+        public string Text { get; set; } = null!;
 
-        public LongAnswerQuestion(IQuestion question) :base(question.Type, question.Text)
-        {
-        
-        }
     }
 }

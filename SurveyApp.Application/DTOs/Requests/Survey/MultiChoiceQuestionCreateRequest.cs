@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SurveyApp.Application.DTOs.Requests.Survey
 {
-    public class MultiChoiceQuestionCreateRequest : IQuestion
+    public class MultiChoiceQuestionCreateRequest
     {
         public string Type { get; set; } = null!;
         public string Text { get; set; } = null!;

@@ -19,30 +19,13 @@ namespace SurveyApp.Application.Services.SurveyService
     public class SurveyService : ISurveyService
     {
         private readonly MongoDbRepository<Survey> _surveyRepository;
-        //private readonly IQuestionFactory _questionFactory;
         private readonly IMapper _mapper;
         public SurveyService(IOptions<MongoDbSettings> mongoDbSettings,
                             
                             IMapper mapper)
         {
             _surveyRepository = new MongoDbRepository<Survey>(mongoDbSettings);
-            //_questionFactory = questionFactory;
             _mapper = mapper;
-        }
-
-        public void CreateSurvey(SurveyCreateRequest surveyCreateRequest)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string CreateSurveyAndReturnId(SurveyCreateRequest surveyCreateRequest)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<string> CreateSurveyAndReturnIdAsync(SurveyCreateRequest surveyCreateRequest)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task CreateSurveyAsync(SurveyCreateRequest newSurvey)
@@ -53,7 +36,7 @@ namespace SurveyApp.Application.Services.SurveyService
                 Title = newSurvey.Title,
                 Description = newSurvey.Description,
                 CreatedAt = newSurvey.CreatedAt,
-                Questions = new List<IQuestion>()
+                Questions = new List<Question>()
             };
 
             // RangeQuestionCreateRequests elemanlarını Questions listesine ekle
@@ -61,7 +44,9 @@ namespace SurveyApp.Application.Services.SurveyService
             {
                 foreach (var rangeQuestionCreateRequest in newSurvey.RangeQuestionCreateRequests)
                 {
-                    var question = new RangeQuestion(rangeQuestionCreateRequest);
+                    var question = new RangeQuestion();
+                    question.Type = rangeQuestionCreateRequest.Type;
+                    question.Text = rangeQuestionCreateRequest.Text;
                     question.Index = survey.GenerateQuestionId();
                     question.MinRange = rangeQuestionCreateRequest.MinRange;
                     question.MaxRange = rangeQuestionCreateRequest.MaxRange;
@@ -74,7 +59,9 @@ namespace SurveyApp.Application.Services.SurveyService
             {
                 foreach (var multiChoiceQuestionCreateRequest in newSurvey.MultiChoiceQuestionCreateRequests)
                 {
-                    var question = new MultiChoiceQuestion(multiChoiceQuestionCreateRequest);
+                    var question = new MultiChoiceQuestion();
+                    question.Type = multiChoiceQuestionCreateRequest.Type;
+                    question.Text = multiChoiceQuestionCreateRequest.Text;
                     question.Index = survey.GenerateQuestionId();
                     question.Choices = multiChoiceQuestionCreateRequest.Choices;
                     survey.Questions.Add(question);
@@ -86,7 +73,9 @@ namespace SurveyApp.Application.Services.SurveyService
             {
                 foreach (var shortAnswerQuestionCreateRequest in newSurvey.ShortAnswerQuestionCreateRequests)
                 {
-                    var question = new ShortAnswerQuestion(shortAnswerQuestionCreateRequest);
+                    var question = new ShortAnswerQuestion();
+                    question.Type = shortAnswerQuestionCreateRequest.Type;
+                    question.Text = shortAnswerQuestionCreateRequest.Text;
                     question.Index = survey.GenerateQuestionId();
                     survey.Questions.Add(question);
                 }
@@ -97,7 +86,9 @@ namespace SurveyApp.Application.Services.SurveyService
             {
                 foreach (var longAnswerQuestionCreateRequest in newSurvey.LongAnswerQuestionCreateRequests)
                 {
-                    var question = new LongAnswerQuestion(longAnswerQuestionCreateRequest);
+                    var question = new LongAnswerQuestion();
+                    question.Type = longAnswerQuestionCreateRequest.Type;
+                    question.Text = longAnswerQuestionCreateRequest.Text;
                     question.Index = survey.GenerateQuestionId();
                     survey.Questions.Add(question);
                 }
@@ -106,36 +97,18 @@ namespace SurveyApp.Application.Services.SurveyService
             await _surveyRepository.AddAsync(survey);
         }
 
-        public IEnumerable<SurveyDisplayResponse?> GetAllSurveys()
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<IEnumerable<SurveyDisplayResponse?>> GetAllSurveysAsync()
+        public async Task<IEnumerable<Survey?>> GetAllSurveysAsync()
         {
             var surveys = await _surveyRepository.GetAllAsync();
-            return _mapper.Map<IEnumerable<SurveyDisplayResponse>>(surveys);
+            return surveys;
         }
 
-        public SurveyDisplayResponse? GetSurveyBySurveyId(string surveyId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<Survey?> GetSurveyBySurveyIdAsync(string surveyId)
+        public async Task<Survey?> GetSurveyByIdAsync(string surveyId)
         {
             var survey = await _surveyRepository.GetByIdAsync(surveyId);
             return survey;
         }
 
-        public IEnumerable<SurveyDisplayResponse?> GetSurveysByUserId(string userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<SurveyDisplayResponse?>> GetSurveysByUserIdAsync(string userId)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }
