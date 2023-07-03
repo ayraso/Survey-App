@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using SurveyApp.Application.DTOs.Requests.Survey;
+using SurveyApp.Application.DTOs.Requests.SurveyResponse;
 using SurveyApp.Application.DTOs.Requests.User;
 using SurveyApp.Application.DTOs.Responses.User;
 using SurveyApp.Domain.Entities.Questions;
+using SurveyApp.Domain.Entities.SurveyResponses;
 using SurveyApp.Domain.Entities.Surveys;
 using SurveyApp.Domain.Entities.Users;
 using System;
@@ -38,7 +40,9 @@ namespace SurveyApp.Application.Mappings
 
 
             // Survey Mappings
-            
+
+            // SurveyResponse Mappings
+            CreateMap<SurveyResponseCreateRequest, SurveyResponse>();
         }
     }
 }

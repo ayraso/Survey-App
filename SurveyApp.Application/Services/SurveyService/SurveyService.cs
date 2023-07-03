@@ -21,8 +21,7 @@ namespace SurveyApp.Application.Services.SurveyService
         private readonly MongoDbRepository<Survey> _surveyRepository;
         private readonly IMapper _mapper;
         public SurveyService(IOptions<MongoDbSettings> mongoDbSettings,
-                            
-                            IMapper mapper)
+                             IMapper mapper)
         {
             _surveyRepository = new MongoDbRepository<Survey>(mongoDbSettings);
             _mapper = mapper;
@@ -207,7 +206,7 @@ namespace SurveyApp.Application.Services.SurveyService
             return await _surveyRepository.IsExistsAsync(surveyId);
         }
 
-        public bool IsUserExists(string surveyId)
+        public bool IsSurveyExists(string surveyId)
         {
             return _surveyRepository.IsExists(surveyId);
         }

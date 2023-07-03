@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SurveyApp.Application.Services.Common
+namespace SurveyApp.Domain.Entities.SurveyResponses
 {
-    public interface IFactory<T>
+    public interface IAnswer
     {
-
+        public string QuestionIndex { get; set; }
     }
 }

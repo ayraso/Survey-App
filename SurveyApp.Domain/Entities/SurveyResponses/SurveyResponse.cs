@@ -8,9 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json.Serialization;
 
-namespace SurveyApp.Domain.Entities.Responses
+namespace SurveyApp.Domain.Entities.SurveyResponses
 {
-    public class Response : IResponse, IMongoDbEntity
+    public class SurveyResponse : ISurveyResponse, IMongoDbEntity
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
@@ -19,7 +19,7 @@ namespace SurveyApp.Domain.Entities.Responses
 
         [BsonElement("Answers")]
         [JsonPropertyName("Answers")]
-        public IList<IAnswer> Answers { get; set; } = null!;
+        public List<Answer> Answers { get; set; } = null!;
 
         [BsonRepresentation(BsonType.DateTime)]
         [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
