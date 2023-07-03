@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SurveyApp.Application.Services.SurveyResponseService
 {
-    public interface ISurveyResponseService
+    public interface ISurveyResponseService : ISurveyAnalyzer
     {
         Task CreateSurveyResponseAsync(SurveyResponseCreateRequest surveyResponseCreateRequest);
         Task<IEnumerable<SurveyResponse?>> GetSurveyResponsesBySurveyIdAsync(string surveyId);

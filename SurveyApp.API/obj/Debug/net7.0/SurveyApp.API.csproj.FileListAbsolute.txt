@@ -108,3 +108,5 @@ C:\Users\ayser\OneDrive\Masaüstü\Survey-App\SurveyApp.API\obj\Debug\net7.0\sco
 C:\Users\ayser\OneDrive\Masaüstü\Survey-App\SurveyApp.API\obj\Debug\net7.0\SurveyApp.API.csproj.CopyComplete
 C:\Users\ayser\OneDrive\Masaüstü\Survey-App\SurveyApp.API\obj\Debug\net7.0\SurveyApp.API.genruntimeconfig.cache
 C:\Users\ayser\OneDrive\Masaüstü\Survey-App\SurveyApp.API\obj\Debug\net7.0\ref\SurveyApp.API.dll
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.API\bin\Debug\net7.0\JsonSubTypes.dll
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.API\bin\Debug\net7.0\Newtonsoft.Json.dll

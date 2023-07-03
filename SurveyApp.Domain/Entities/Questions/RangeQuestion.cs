@@ -11,9 +11,9 @@ namespace SurveyApp.Domain.Entities.Questions
     [BsonDiscriminator("RangeQuestion")]
     public class RangeQuestion : Question
     {
-        public  string? Index { get; set; }
-        public  string Type { get; set; } = null!;
-        public  string Text { get; set; } = null!;
+        //public  string? Index { get; set; }
+        //public  string Type { get; set; } = null!;
+        //public  string Text { get; set; } = null!;
         public string MinRange { get; set; } = "1";
         public string MaxRange { get; set; } = null!;
 

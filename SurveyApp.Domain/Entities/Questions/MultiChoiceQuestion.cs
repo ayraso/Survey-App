@@ -12,9 +12,9 @@ namespace SurveyApp.Domain.Entities.Questions
     [BsonDiscriminator("MultiChoiceQuestion")]
     public class MultiChoiceQuestion : Question
     {
-        public  string? Index { get; set; }
-        public  string Type { get; set; } = null!;
-        public  string Text { get; set; } = null!;
+        //public  string? Index { get; set; }
+        //public  string Type { get; set; } = null!;
+        //public  string Text { get; set; } = null!;
 
         [BsonElement("Choices")]
         [JsonPropertyName("Choices")]
