@@ -16,19 +16,21 @@ namespace SurveyApp.API.Controllers
            this._userService = userService;
         }
 
-        [HttpGet("Users/All")]
-        public async Task<IEnumerable<User?>> GetUsersAsync()
+        [HttpGet("/User/All")]
+        public async Task<IActionResult> GetUsers()
         {
-            return await _userService.GetAllUsersAsync();
+            var users = await _userService.GetAllUsersAsync();
+            return Ok(users);
         }
 
-        [HttpGet("Users/{userId}")] 
-        public async Task<User?> GetUser(string userId)
+        [HttpGet("/User/{userId}")] 
+        public async Task<IActionResult> GetUser(string userId)
         {
-            return await _userService.GetUserByIdAsync(userId);
+            var user = await _userService.GetUserByIdAsync(userId);
+            return Ok(user);
         }
 
-        [HttpPost("/SignIn")]
+        [HttpPost("/User/SignIn")]
         public async Task<IActionResult> CreateNewUser(UserCreateRequest userCreateRequest)
         {
             if(ModelState.IsValid)

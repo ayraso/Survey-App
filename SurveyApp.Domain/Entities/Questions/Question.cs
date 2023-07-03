@@ -11,8 +11,6 @@ namespace SurveyApp.Domain.Entities.Questions
     [BsonKnownTypes(typeof(LongAnswerQuestion), typeof(ShortAnswerQuestion), typeof(RangeQuestion), typeof(MultiChoiceQuestion))]
     public class Question
     {
-        //public  string? Index { get; set;}
-        //public  string? Type { get; set; }
-        //public  string? Text { get; set; }
+       
     }
 }
