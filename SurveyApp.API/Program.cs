@@ -7,28 +7,19 @@ using SurveyApp.Application.Services.UserService;
 using SurveyApp.Infrastructure.Data;
 using System.ComponentModel.Design;
 using SurveyApp.Application.Services.SurveyResponseService;
+using SurveyApp.API.Extensions;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 // Add services to the container.
-
-// düzenlenecek
-builder.Services.AddSingleton<IUserService, UserService>();
-builder.Services.AddSingleton<ISurveyService, SurveyService>();
-builder.Services.AddSingleton<ISurveyResponseService, SurveyResponseService>();
-// MongoDB
-builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDB"));
-// AutoMapper
-builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddIoCServices();
+builder.Services.LoadMongoDbSettings(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-var objectSerializer = new ObjectSerializer(type => ObjectSerializer.DefaultAllowedTypes(type) || type.FullName.StartsWith("SurveyApp"));
-BsonSerializer.RegisterSerializer(objectSerializer);
 
 var app = builder.Build();
 
