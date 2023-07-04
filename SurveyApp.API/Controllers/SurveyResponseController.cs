@@ -41,6 +41,22 @@ namespace SurveyApp.API.Controllers
             return BadRequest();
         }
 
+        [HttpGet("/Surveys/{surveyId}/Analyzes")]
+        public async Task<IActionResult> GetSurveyAnalysisBySurveyId(string surveyId)
+        {
+            if (surveyId != null)
+            {
+                bool isSurveyExists = await _surveyService.IsSurveyExistsAsync(surveyId);
+                if (isSurveyExists)
+                {
+                    var analysis = await _surveyResponseService.AnalyzeSurveyAsync(surveyId);
+                    return Ok(analysis);
+                }
+                return NotFound(new { message = $"Böyle bir anket bulunamadı." });
+            }
+            return BadRequest();
+        }
+
         [HttpPost("/Surveys/{surveyId}/CreateResponse")]
         public async Task<IActionResult> CreateSurveyResponse(SurveyResponseCreateRequest surveyResponse)
         {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SurveyApp.Application.DTOs.Responses
 {
-    public class RangeQuestionAnalyzeResponse : IQuestionAnalyze
+    public class RangeQuestionAnalyzeResponse : QuestionAnalyze
     {
         public string SurveyId { get; set; } = null!;
         public string Index { get; set; } = null!;

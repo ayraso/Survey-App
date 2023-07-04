@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace SurveyApp.Application.DTOs.Responses.SurveyResponse
 {
-    public class MultiChoiceQuestionAnalyzeResponse : IQuestionAnalyze
+    public class MultiChoiceQuestionAnalyzeResponse : QuestionAnalyze
     {
         public string SurveyId { get; set; } = null!;
         public string Index { get; set; } = null!;
-        public string Answer { get; set; } = null!;
-        public string NumOfVotes { get; set; } = null!;
-        public string RateOfVote { get; set; } = null!;
+        public List<AnswerAnalyze> AnswerAnalyzes { get; set; } = new List<AnswerAnalyze>();
     }
 }

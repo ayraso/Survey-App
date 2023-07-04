@@ -29,98 +29,116 @@ namespace SurveyApp.Application.Services.SurveyResponseService
             _mapper = mapper;
         }
 
+        public List<AnswerAnalyze> AnalyzeAnswers(List<string> questionAnswers)
+        {
+            var answerCounts = questionAnswers
+                .GroupBy(x => x)
+                .Select(group => new
+                {
+                    Answer = group.Key,
+                    Count = group.Count()
+                })
+                .ToList();
+
+            var totalVotes = questionAnswers.Count;
+
+            var answerAnalysis = new List<AnswerAnalyze>();
+
+            foreach (var answerCount in answerCounts)
+            {
+                var rateOfVote = ((double)answerCount.Count / totalVotes) * 100;
+
+                var analysis = new AnswerAnalyze
+                {
+                    Answer = answerCount.Answer,
+                    NumOfVotes = answerCount.Count.ToString(),
+                    RateOfVote = $"{rateOfVote:F2}%"
+                };
+
+                answerAnalysis.Add(analysis);
+            }
+
+            return answerAnalysis;
+        }
+
         public async Task<SurveyAnalysisResponse> AnalyzeSurveyAsync(string surveyId)
         {
-            throw new NotImplementedException();
-            //var analysis = new SurveyAnalysisResponse
-            //{
-            //    SurveyId = surveyId
-            //};
+            //throw new NotImplementedException();
+            var analyzeResponse = new SurveyAnalysisResponse
+            {
+                SurveyId = surveyId
+            };
 
-            //Survey? survey = _surveyRepository.GetById(surveyId);
+            Survey? survey = _surveyRepository.GetById(surveyId);
 
-            //// bir ankete verilmiş olan tüm response ları çektim
-            //var surveyResponses = await _surveyResponseRepository.GetAllWithPredicateAsync(r => r.SurveyId == surveyId);
-            //// ankette kaç soru olduğunu buldum
-            //int numOfQuestions = survey.Questions.Count();
+            // bir ankete verilmiş olan tüm response ları çektim
+            var surveyResponses = await _surveyResponseRepository.GetAllWithPredicateAsync(r => r.SurveyId == surveyId);
+            // ankette kaç soru olduğunu buldum
+            int numOfQuestions = survey.Questions.Count();
 
-            //// ankette bulunan her bir soru için
-            //for (int i=1; i<= numOfQuestions; i++)
-            //{
-            //    var questionIndex = i.ToString();
+            // ankette bulunan her bir soru için
+            for (int i = 1; i <= numOfQuestions; i++)
+            {
+                var questionIndex = i.ToString();
 
-            //    // ilgili soru için verilmiş tüm cevapları topladım
-            //    var questionAnswers = new List<Answer>();
-            //    foreach (var response in surveyResponses)
-            //    {
-            //        var answers = response.Answers.Where(answer => answer.QuestionIndex == questionIndex);
-            //        questionAnswers.AddRange(answers);
-            //    }
+                // ilgili soru için verilmiş tüm cevapları topladım
+                var questionAnswers = new List<string>();
+                foreach (var response in surveyResponses)
+                {
+                    var answer = response.Answers.Where(answer => answer.QuestionIndex == questionIndex).SingleOrDefault();
+                    questionAnswers.Add(answer.AnswerText);
+                }
 
-            //    // ilgili sorunun tipini buldum
-            //    var question = (Question)survey.Questions.Where(q => q.Index == questionIndex);
-            //    string questionType = question.Type;
+                // ilgili sorunun tipini buldum
+                Question question = survey.Questions.SingleOrDefault(q => q.Index == questionIndex);
+                string questionType = question.Type;
 
-            //    if(questionType == "LongAnswer")
-            //    {
-            //        // ilgili soru için verilmiş tüm cevapları analiz nesnesi içindeki Answers a at
-            //        LongAnswerQuestionAnalyzeResponse questionAnalyze = new LongAnswerQuestionAnalyzeResponse()
-            //        {
-            //            SurveyId = surveyId,
-            //            Index = questionIndex,
-            //            Answers = questionAnswers
-            //        }
-            //    }
+                if (questionType == "LongAnswer")
+                {
+                    // ilgili soru için verilmiş tüm cevapları analiz nesnesi içindeki Answers a at
+                    LongAnswerQuestionAnalyzeResponse questionAnalyze = new LongAnswerQuestionAnalyzeResponse()
+                    {
+                        SurveyId = surveyId,
+                        Index = questionIndex,
+                        Answers = questionAnswers
+                    };
+                    analyzeResponse.QuestionAnalyzes.Append(questionAnalyze);
+                }
+                else if(questionType == "ShortAnswer")
+                {
+                    // ilgili soru için verilmiş tüm cevapları analiz nesnesi içindeki Answers a at
+                    ShortAnswerQuestionAnalyzeResponse questionAnalyze = new ShortAnswerQuestionAnalyzeResponse()
+                    {
+                        SurveyId = surveyId,
+                        Index = questionIndex,
+                        Answers = questionAnswers
+                    };
+                    analyzeResponse.QuestionAnalyzes.Append(questionAnalyze);
+                }
+                else if(questionType == "Range")
+                {
+                    RangeQuestionAnalyzeResponse questionAnalyze = new RangeQuestionAnalyzeResponse()
+                    {
+                        SurveyId = surveyId,
+                        Index = questionIndex,
+                        AnswerAnalyzes = this.AnalyzeAnswers(questionAnswers)
+                    };
+                    analyzeResponse.QuestionAnalyzes.Append(questionAnalyze);
+                }
+                else if(questionType == "MultiChoice")
+                {
+                    MultiChoiceQuestionAnalyzeResponse questionAnalyze = new MultiChoiceQuestionAnalyzeResponse()
+                    {
+                        SurveyId = surveyId,
+                        Index = questionIndex,
+                        AnswerAnalyzes = this.AnalyzeAnswers(questionAnswers)
+                    };
+                    analyzeResponse.QuestionAnalyzes.Append(questionAnalyze);
+                }
+            }
+            analyzeResponse.TotalResponses = surveyResponses.Count();
 
-
-
-            //    if (questionType == "LongAnswer" || questionType == "ShortAnswer")
-            //    {
-            //        var answers = questionAnswers
-            //            .Select(answer => answer.Value.ToString())
-            //            .ToList();
-
-            //        //var questionAnalyze = questionType == "LongAnswer"
-            //        //    ? new LongAnswerQuestionAnalyzeResponse
-            //        //    {
-            //        //        SurveyId = surveyId,
-            //        //        Index = questionIndex,
-            //        //        Answers = answers
-            //        //    }
-            //        //    : new ShortAnswerQuestionAnalyzeResponse
-            //        //    {
-            //        //        SurveyId = surveyId,
-            //        //        Index = questionIndex,
-            //        //        Answers = answers
-            //        //    };
-
-            //        ((List<IQuestionAnalyze>)analysisResponse.QuestionAnalyzes).Add(questionAnalyze);
-            //    }
-            //    else if (questionType == "Range" || questionType == "MultiChoice")
-            //    {
-            //        var groupedAnswers = questionAnswers
-            //            .GroupBy(answer => answer.Value.ToString())
-            //            .ToList();
-
-            //        var questionAnalyze = questionType == "Range"
-            //            ? new RangeQuestionAnalyzeResponse
-            //            {
-            //                SurveyId = surveyId,
-            //                Index = questionIndex,
-            //                NumOfVotes = groupedAnswers.Count.ToString(),
-            //                RateOfVote = ((double)groupedAnswers.Count / surveyResponses.Count).ToString("P")
-            //            }
-            //            : new MultiChoiceQuestionAnalyzeResponse
-            //            {
-            //                SurveyId = surveyId,
-            //                Index = questionIndex,
-            //                NumOfVotes = groupedAnswers.Sum(group => group.Count()).ToString(),
-            //                RateOfVote = ((double)groupedAnswers.Sum(group => group.Count()) / surveyResponses.Count).ToString("P")
-            //            };
-
-            //        ((List<IQuestionAnalyze>)analysisResponse.QuestionAnalyzes).Add(questionAnalyze);
-            //    }
-            //}
+            return analyzeResponse;
         }
 
         public async Task CreateSurveyResponseAsync(SurveyResponseCreateRequest surveyResponseCreateRequest)

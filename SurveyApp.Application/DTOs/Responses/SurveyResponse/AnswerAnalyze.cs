@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace SurveyApp.Application.DTOs.Responses.SurveyResponse
 {
-    public interface IQuestionAnalyze
+    public class AnswerAnalyze
     {
-        string SurveyId { get; set; }
-        string Index { get; set; }
+        public string Answer { get; set; } = null!;
+        public string NumOfVotes { get; set; } = null!;
+        public string RateOfVote { get; set; } = null!;
     }
 }
