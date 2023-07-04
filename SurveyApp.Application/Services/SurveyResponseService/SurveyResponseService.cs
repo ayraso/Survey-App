@@ -102,7 +102,7 @@ namespace SurveyApp.Application.Services.SurveyResponseService
                         Index = questionIndex,
                         Answers = questionAnswers
                     };
-                    analyzeResponse.QuestionAnalyzes.Append(questionAnalyze);
+                    analyzeResponse.QuestionAnalyzes.Add(questionAnalyze);
                 }
                 else if(questionType == "ShortAnswer")
                 {
@@ -113,7 +113,7 @@ namespace SurveyApp.Application.Services.SurveyResponseService
                         Index = questionIndex,
                         Answers = questionAnswers
                     };
-                    analyzeResponse.QuestionAnalyzes.Append(questionAnalyze);
+                    analyzeResponse.QuestionAnalyzes.Add(questionAnalyze);
                 }
                 else if(questionType == "Range")
                 {
@@ -123,7 +123,7 @@ namespace SurveyApp.Application.Services.SurveyResponseService
                         Index = questionIndex,
                         AnswerAnalyzes = this.AnalyzeAnswers(questionAnswers)
                     };
-                    analyzeResponse.QuestionAnalyzes.Append(questionAnalyze);
+                    analyzeResponse.QuestionAnalyzes.Add(questionAnalyze);
                 }
                 else if(questionType == "MultiChoice")
                 {
@@ -133,7 +133,7 @@ namespace SurveyApp.Application.Services.SurveyResponseService
                         Index = questionIndex,
                         AnswerAnalyzes = this.AnalyzeAnswers(questionAnswers)
                     };
-                    analyzeResponse.QuestionAnalyzes.Append(questionAnalyze);
+                    analyzeResponse.QuestionAnalyzes.Add(questionAnalyze);
                 }
             }
             analyzeResponse.TotalResponses = surveyResponses.Count();

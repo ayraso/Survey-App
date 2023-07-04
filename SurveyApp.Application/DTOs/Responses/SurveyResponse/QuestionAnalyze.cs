@@ -14,7 +14,7 @@ namespace SurveyApp.Application.DTOs.Responses.SurveyResponse
     [JsonDerivedType(typeof(MultiChoiceQuestionAnalyzeResponse))]
     public abstract class QuestionAnalyze
     {
-        //string SurveyId { get; set; }
-        //string Index { get; set; }
+        public string SurveyId { get; set; }
+        public string Index { get; set; }
     }
 }

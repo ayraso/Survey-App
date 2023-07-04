@@ -10,6 +10,6 @@ namespace SurveyApp.Application.DTOs.Responses.SurveyResponse
     {
         public string SurveyId { get; set; } = null!;
         public long TotalResponses { get; set; }
-        public IEnumerable<QuestionAnalyze> QuestionAnalyzes { get; set; } = Enumerable.Empty<QuestionAnalyze>();
+        public List<QuestionAnalyze> QuestionAnalyzes { get; set; } = new List<QuestionAnalyze>();
     }
 }
