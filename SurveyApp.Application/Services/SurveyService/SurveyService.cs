@@ -29,26 +29,15 @@ namespace SurveyApp.Application.Services.SurveyService
 
         public void CreateSurvey(SurveyCreateRequest newSurvey)
         {
-            var survey = new Survey
-            {
-                UserIdCreatedBy = newSurvey.UserIdCreatedBy,
-                Title = newSurvey.Title,
-                Description = newSurvey.Description,
-                CreatedAt = newSurvey.CreatedAt,
-                Questions = new List<Question>()
-            };
+            Survey survey = _mapper.Map<Survey>(newSurvey);
 
             // RangeQuestionCreateRequests elemanlarını Questions listesine ekle
             if (newSurvey.RangeQuestionCreateRequests != null && newSurvey.RangeQuestionCreateRequests.Count > 0)
             {
                 foreach (var rangeQuestionCreateRequest in newSurvey.RangeQuestionCreateRequests)
                 {
-                    var question = new RangeQuestion();
-                    question.Type = rangeQuestionCreateRequest.Type;
-                    question.Text = rangeQuestionCreateRequest.Text;
-                    question.Index = survey.GenerateQuestionId();
-                    question.MinRange = rangeQuestionCreateRequest.MinRange;
-                    question.MaxRange = rangeQuestionCreateRequest.MaxRange;
+                    Question question = _mapper.Map<RangeQuestion>(rangeQuestionCreateRequest);
+                    question.Index = survey.GenerateQuestionIndex();
                     survey.Questions.Add(question);
                 }
             }
@@ -58,11 +47,8 @@ namespace SurveyApp.Application.Services.SurveyService
             {
                 foreach (var multiChoiceQuestionCreateRequest in newSurvey.MultiChoiceQuestionCreateRequests)
                 {
-                    var question = new MultiChoiceQuestion();
-                    question.Type = multiChoiceQuestionCreateRequest.Type;
-                    question.Text = multiChoiceQuestionCreateRequest.Text;
-                    question.Index = survey.GenerateQuestionId();
-                    question.Choices = multiChoiceQuestionCreateRequest.Choices;
+                    Question question = _mapper.Map<MultiChoiceQuestion>(multiChoiceQuestionCreateRequest);
+                    question.Index = survey.GenerateQuestionIndex();
                     survey.Questions.Add(question);
                 }
             }
@@ -72,10 +58,8 @@ namespace SurveyApp.Application.Services.SurveyService
             {
                 foreach (var shortAnswerQuestionCreateRequest in newSurvey.ShortAnswerQuestionCreateRequests)
                 {
-                    var question = new ShortAnswerQuestion();
-                    question.Type = shortAnswerQuestionCreateRequest.Type;
-                    question.Text = shortAnswerQuestionCreateRequest.Text;
-                    question.Index = survey.GenerateQuestionId();
+                    Question question = _mapper.Map<ShortAnswerQuestion>(shortAnswerQuestionCreateRequest);
+                    question.Index = survey.GenerateQuestionIndex();
                     survey.Questions.Add(question);
                 }
             }
@@ -85,10 +69,8 @@ namespace SurveyApp.Application.Services.SurveyService
             {
                 foreach (var longAnswerQuestionCreateRequest in newSurvey.LongAnswerQuestionCreateRequests)
                 {
-                    var question = new LongAnswerQuestion();
-                    question.Type = longAnswerQuestionCreateRequest.Type;
-                    question.Text = longAnswerQuestionCreateRequest.Text;
-                    question.Index = survey.GenerateQuestionId();
+                    Question question = _mapper.Map<LongAnswerQuestion>(longAnswerQuestionCreateRequest);
+                    question.Index = survey.GenerateQuestionIndex();
                     survey.Questions.Add(question);
                 }
             }
@@ -98,26 +80,15 @@ namespace SurveyApp.Application.Services.SurveyService
 
         public async Task CreateSurveyAsync(SurveyCreateRequest newSurvey)
         {
-            var survey = new Survey
-            {
-                UserIdCreatedBy = newSurvey.UserIdCreatedBy,
-                Title = newSurvey.Title,
-                Description = newSurvey.Description,
-                CreatedAt = newSurvey.CreatedAt,
-                Questions = new List<Question>()
-            };
+            Survey survey = _mapper.Map<Survey>(newSurvey);
 
             // RangeQuestionCreateRequests elemanlarını Questions listesine ekle
             if (newSurvey.RangeQuestionCreateRequests != null && newSurvey.RangeQuestionCreateRequests.Count > 0)
             {
                 foreach (var rangeQuestionCreateRequest in newSurvey.RangeQuestionCreateRequests)
                 {
-                    var question = new RangeQuestion();
-                    question.Type = rangeQuestionCreateRequest.Type;
-                    question.Text = rangeQuestionCreateRequest.Text;
-                    question.Index = survey.GenerateQuestionId();
-                    question.MinRange = rangeQuestionCreateRequest.MinRange;
-                    question.MaxRange = rangeQuestionCreateRequest.MaxRange;
+                    Question question = _mapper.Map<RangeQuestion>(rangeQuestionCreateRequest);
+                    question.Index = survey.GenerateQuestionIndex();
                     survey.Questions.Add(question);
                 }
             }
@@ -127,11 +98,8 @@ namespace SurveyApp.Application.Services.SurveyService
             {
                 foreach (var multiChoiceQuestionCreateRequest in newSurvey.MultiChoiceQuestionCreateRequests)
                 {
-                    var question = new MultiChoiceQuestion();
-                    question.Type = multiChoiceQuestionCreateRequest.Type;
-                    question.Text = multiChoiceQuestionCreateRequest.Text;
-                    question.Index = survey.GenerateQuestionId();
-                    question.Choices = multiChoiceQuestionCreateRequest.Choices;
+                    Question question = _mapper.Map<MultiChoiceQuestion>(multiChoiceQuestionCreateRequest);
+                    question.Index = survey.GenerateQuestionIndex();
                     survey.Questions.Add(question);
                 }
             }
@@ -141,10 +109,8 @@ namespace SurveyApp.Application.Services.SurveyService
             {
                 foreach (var shortAnswerQuestionCreateRequest in newSurvey.ShortAnswerQuestionCreateRequests)
                 {
-                    var question = new ShortAnswerQuestion();
-                    question.Type = shortAnswerQuestionCreateRequest.Type;
-                    question.Text = shortAnswerQuestionCreateRequest.Text;
-                    question.Index = survey.GenerateQuestionId();
+                    Question question = _mapper.Map<ShortAnswerQuestion>(shortAnswerQuestionCreateRequest);
+                    question.Index = survey.GenerateQuestionIndex();
                     survey.Questions.Add(question);
                 }
             }
@@ -154,10 +120,8 @@ namespace SurveyApp.Application.Services.SurveyService
             {
                 foreach (var longAnswerQuestionCreateRequest in newSurvey.LongAnswerQuestionCreateRequests)
                 {
-                    var question = new LongAnswerQuestion();
-                    question.Type = longAnswerQuestionCreateRequest.Type;
-                    question.Text = longAnswerQuestionCreateRequest.Text;
-                    question.Index = survey.GenerateQuestionId();
+                    Question question = _mapper.Map<LongAnswerQuestion>(longAnswerQuestionCreateRequest);
+                    question.Index = survey.GenerateQuestionIndex();
                     survey.Questions.Add(question);
                 }
             }

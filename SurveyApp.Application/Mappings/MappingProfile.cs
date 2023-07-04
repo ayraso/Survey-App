@@ -40,6 +40,7 @@ namespace SurveyApp.Application.Mappings
 
 
             // Survey Mappings
+            CreateMap<SurveyCreateRequest, Survey>();
 
             // SurveyResponse Mappings
             CreateMap<SurveyResponseCreateRequest, SurveyResponse>();

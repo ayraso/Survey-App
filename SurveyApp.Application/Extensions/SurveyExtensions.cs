@@ -10,7 +10,7 @@ namespace SurveyApp.Application.Extensions
 {
     public static class SurveyExtensions
     {
-        public static string GenerateQuestionId(this Survey survey)
+        public static string GenerateQuestionIndex(this Survey survey)
         {
             int newId_int = survey.Questions.Count + 1;
             return newId_int.ToString();

@@ -63,12 +63,13 @@ namespace SurveyApp.API.Controllers
         [HttpPost("/Survey/Create")]
         public async Task<IActionResult> CreateSurvey(SurveyCreateRequest survey)
         {
-            if(ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 await _surveyService.CreateSurveyAsync(survey);
                 return Ok();
             }
             return BadRequest();
         }
+        
     }
 }

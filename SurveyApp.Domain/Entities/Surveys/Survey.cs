@@ -22,7 +22,7 @@ namespace SurveyApp.Domain.Entities.Surveys
 
         [BsonElement("Questions")]
         [JsonPropertyName("Questions")]
-        public List<Question> Questions { get; set; } = null!;
+        public List<Question> Questions { get; set; } = new List<Question>();
 
         [BsonRepresentation(BsonType.DateTime)]
         [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
