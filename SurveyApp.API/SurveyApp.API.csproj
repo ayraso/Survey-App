@@ -16,4 +16,8 @@
     <ProjectReference Include="..\SurveyApp.Application\SurveyApp.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>

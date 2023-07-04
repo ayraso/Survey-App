@@ -1,6 +1,5 @@
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Bson.Serialization;
-using SurveyApp.API.Models;
 using SurveyApp.Application.Mappings;
 using SurveyApp.Application.Services.SurveyService;
 using SurveyApp.Application.Services.UserService;

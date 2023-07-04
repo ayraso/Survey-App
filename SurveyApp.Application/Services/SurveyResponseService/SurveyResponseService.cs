@@ -28,17 +28,17 @@ namespace SurveyApp.Application.Services.SurveyResponseService
             _surveyRepository = new MongoDbRepository<Survey>(mongoDbSettings);
             _mapper = mapper;
         }
-
+        // TODO: AnalyzeAnswers işlemini interface veya dependency(class) olarak ekle.
         public List<AnswerAnalyze> AnalyzeAnswers(List<string> questionAnswers)
         {
             var answerCounts = questionAnswers
-                .GroupBy(x => x)
-                .Select(group => new
-                {
-                    Answer = group.Key,
-                    Count = group.Count()
-                })
-                .ToList();
+                                            .GroupBy(x => x)
+                                            .Select(group => new
+                                            {
+                                                Answer = group.Key,
+                                                Count = group.Count()
+                                            })
+                                            .ToList();
 
             var totalVotes = questionAnswers.Count;
 
@@ -60,14 +60,10 @@ namespace SurveyApp.Application.Services.SurveyResponseService
 
             return answerAnalysis;
         }
-
+        // TODO: AnalyzeSurveyAsync işlemini interface veya dependency(class) olarak ekle.
         public async Task<SurveyAnalysisResponse> AnalyzeSurveyAsync(string surveyId)
         {
-            //throw new NotImplementedException();
-            var analyzeResponse = new SurveyAnalysisResponse
-            {
-                SurveyId = surveyId
-            };
+            var analyzeResponse = new SurveyAnalysisResponse{SurveyId = surveyId};
 
             Survey? survey = _surveyRepository.GetById(surveyId);
 
@@ -92,7 +88,7 @@ namespace SurveyApp.Application.Services.SurveyResponseService
                 // ilgili sorunun tipini buldum
                 Question question = survey.Questions.SingleOrDefault(q => q.Index == questionIndex);
                 string questionType = question.Type;
-
+                //TODO: questionAnalizResponse yaratımı için constructor yapmalı mıyım?
                 if (questionType == "LongAnswer")
                 {
                     // ilgili soru için verilmiş tüm cevapları analiz nesnesi içindeki Answers a at
@@ -136,7 +132,7 @@ namespace SurveyApp.Application.Services.SurveyResponseService
                     analyzeResponse.QuestionAnalyzes.Add(questionAnalyze);
                 }
             }
-            analyzeResponse.TotalResponses = surveyResponses.Count();
+            analyzeResponse.TotalResponses = surveyResponses.Count().ToString();
 
             return analyzeResponse;
         }

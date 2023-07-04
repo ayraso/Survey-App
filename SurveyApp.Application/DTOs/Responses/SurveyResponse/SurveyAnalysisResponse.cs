@@ -9,7 +9,7 @@ namespace SurveyApp.Application.DTOs.Responses.SurveyResponse
     public class SurveyAnalysisResponse
     {
         public string SurveyId { get; set; } = null!;
-        public long TotalResponses { get; set; }
+        public string TotalResponses { get; set; }
         public List<QuestionAnalyze> QuestionAnalyzes { get; set; } = new List<QuestionAnalyze>();
     }
 }
