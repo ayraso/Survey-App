@@ -1,19 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SurveyApp.Application.DTOs.Requests.User;
 using SurveyApp.Application.Services.UserService;
 using SurveyApp.Domain.Entities.Users;
 
 namespace SurveyApp.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IConfiguration _configuration;
+        private readonly string? key;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IConfiguration configuration)
         {
-           this._userService = userService;
+            this._userService = userService;
+            this._configuration = configuration;
+            this.key = _configuration.GetSection("JwtKey").ToString();
         }
 
         [HttpGet("/User/All")]
@@ -42,6 +48,21 @@ namespace SurveyApp.API.Controllers
                     return Ok();
                 }
                 return Conflict(new { message = $"Bu e-posta hesabına ait bir hesap zaten bulunmaktadır." });
+            }
+            return BadRequest();
+        }
+
+        [AllowAnonymous]
+        [HttpPost("/User/Login")]
+        public async Task<IActionResult> Login(UserLoginRequest userLoginRequest)
+        {
+            if (ModelState.IsValid)
+            {
+                var token = _userService.Authenticate(userLoginRequest, key);
+                if (token == null) 
+                    return Unauthorized();
+                //TODO: userLoginResquest döndürmek yerine ne döndürülebilir?
+                return Ok(new {token, userLoginRequest });
             }
             return BadRequest();
         }

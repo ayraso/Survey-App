@@ -9,9 +9,10 @@ using System.Threading.Tasks;
 
 namespace SurveyApp.Application.Services.UserService
 {
-    public interface IValidationService : IService
+    public interface IAuthenticationService : IService
     {
         public Task<User?> ValidateUserAsync(UserLoginRequest userLoginRequest);
         public User ValidateUser(UserLoginRequest userLoginRequest);
+        public Task<string> Authenticate(UserLoginRequest loginRequest, string key);
     }
 }

@@ -10,10 +10,11 @@ using SurveyApp.API.Extensions;
 using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
-
+//TODO: IEnumarable, IList gibi yapýlarý denetle.
 // Add services to the container.
 builder.Services.AddIoCServices();
 builder.Services.LoadMongoDbSettings(builder.Configuration);
+builder.Services.AddJWTAuthentication(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -30,6 +31,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

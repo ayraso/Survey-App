@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SurveyApp.Application.Services.UserService
 {
-    public interface IUserService : IAccountManagementService, IValidationService, IRegistrationService
+    public interface IUserService : IAccountManagementService, IAuthenticationService, IRegistrationService
     {
         Task<IEnumerable<User?>> GetAllUsersAsync();
         IEnumerable<User?> GetAllUsers();

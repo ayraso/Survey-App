@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
 using SurveyApp.Application.DTOs.Requests.User;
 using SurveyApp.Application.DTOs.Responses.User;
@@ -8,6 +9,8 @@ using SurveyApp.Infrastructure.Data;
 using SurveyApp.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -147,6 +150,30 @@ namespace SurveyApp.Application.Services.UserService
         public bool IsUserExists(string UserId)
         {
             return _userRepository.IsExists(UserId);    
+        }
+
+        public async Task<string> Authenticate(UserLoginRequest loginRequest, string key)
+        {
+            var user = await this.ValidateUserAsync(loginRequest);
+            if (user == null) return null;
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenKey = Encoding.ASCII.GetBytes(key);
+
+            var tokenDescriptor = new SecurityTokenDescriptor()
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Email, loginRequest.Email)
+                }),
+                Expires = DateTime.UtcNow.AddHours(1),
+                SigningCredentials = new SigningCredentials(
+                        new SymmetricSecurityKey(tokenKey),
+                        SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return tokenHandler.WriteToken(token);
         }
     }
 }
