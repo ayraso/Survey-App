@@ -20,5 +20,7 @@ namespace SurveyApp.Application.Services.SurveyService
         IEnumerable<Survey?> GetSurveysByUserId(string userId);
         Task<bool> IsSurveyExistsAsync(string surveyId);
         bool IsSurveyExists(string surveyId);
+        Task<bool> CheckSurveyOwnershipAsync(string surveyId, string userId);
+        bool CheckSurveyOwnerShip(string surveyId, string userId);
     }
 }

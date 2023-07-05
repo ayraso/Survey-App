@@ -17,6 +17,7 @@ namespace SurveyApp.Domain.Entities.Users
         public string Email { get; set; } = null!;
         public string Password { get; set; } = null!;
         public string AccountType { get; set; } = null!;
+        public string Role { get; set; } = null!;
 
         [BsonRepresentation(BsonType.DateTime)]
         [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]

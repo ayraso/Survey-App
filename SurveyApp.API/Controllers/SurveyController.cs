@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SurveyApp.Application.DTOs.Requests.Survey;
 using SurveyApp.Application.Services.SurveyService;
 using SurveyApp.Application.Services.UserService;
@@ -7,6 +8,7 @@ using SurveyApp.Domain.Entities.Users;
 
 namespace SurveyApp.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class SurveyController : ControllerBase
@@ -20,6 +22,7 @@ namespace SurveyApp.API.Controllers
             this._userService = userService;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("/Survey/All")]
         public async Task<IActionResult> GetSurveys()
         {
@@ -27,6 +30,7 @@ namespace SurveyApp.API.Controllers
             return Ok(surveys);
         }
 
+        [AllowAnonymous]
         [HttpGet("/Survey/{surveyId}")]
         public async Task<IActionResult> GetSurveyById(string surveyId)
         {
@@ -44,8 +48,9 @@ namespace SurveyApp.API.Controllers
 
         }
 
+        [Authorize(Roles = "Admin, User")]
         [HttpGet("/Survey/User:{userId}")]
-        public async Task<IActionResult> GetSurveyByUserId(string userId)
+        public async Task<IActionResult> GetSurveysByUserId(string userId)
         {
             if (userId != null)
             {
@@ -60,6 +65,7 @@ namespace SurveyApp.API.Controllers
             return BadRequest();
         }
 
+        [Authorize(Roles = "Admin, User")]
         [HttpPost("/Survey/Create")]
         public async Task<IActionResult> CreateSurvey(SurveyCreateRequest survey)
         {

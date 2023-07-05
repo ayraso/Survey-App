@@ -152,7 +152,7 @@ namespace SurveyApp.Application.Services.UserService
             return _userRepository.IsExists(UserId);    
         }
 
-        public async Task<string> Authenticate(UserLoginRequest loginRequest, string key)
+        public async Task<string> AuthenticateAsync(UserLoginRequest loginRequest, string key)
         {
             var user = await this.ValidateUserAsync(loginRequest);
             if (user == null) return null;
@@ -164,7 +164,8 @@ namespace SurveyApp.Application.Services.UserService
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Email, loginRequest.Email)
+                    new Claim("Id", user.Id),
+                    new Claim(ClaimTypes.Role, user.Role)
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials = new SigningCredentials(

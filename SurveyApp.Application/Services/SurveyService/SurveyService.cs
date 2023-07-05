@@ -174,5 +174,19 @@ namespace SurveyApp.Application.Services.SurveyService
         {
             return _surveyRepository.IsExists(surveyId);
         }
+
+        public async Task<bool> CheckSurveyOwnershipAsync(string surveyId, string userId)
+        {
+            var survey = await _surveyRepository.GetByIdAsync(surveyId);
+            if (survey.UserIdCreatedBy == userId) return true;
+            else return false;
+        }
+
+        public bool CheckSurveyOwnerShip(string surveyId, string userId)
+        {
+            var survey = _surveyRepository.GetById(surveyId);
+            if (survey.UserIdCreatedBy == userId) return true;
+            else return false;
+        }
     }
 }

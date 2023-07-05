@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SurveyApp.Application.DTOs.Requests.Survey;
 using SurveyApp.Application.DTOs.Requests.SurveyResponse;
 using SurveyApp.Application.Services.SurveyResponseService;
 using SurveyApp.Application.Services.SurveyService;
 using SurveyApp.Application.Services.UserService;
 using SurveyApp.Domain.Entities.SurveyResponses;
+using System.Security.Claims;
 
 namespace SurveyApp.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class SurveyResponseController : ControllerBase
@@ -25,6 +28,7 @@ namespace SurveyApp.API.Controllers
             this._surveyResponseService = surveyResponseService;
         }
 
+        [Authorize(Roles = "User")]
         [HttpGet("/Surveys/{surveyId}/Responses")]
         public async Task<IActionResult> GetResponsesBySurveyId(string surveyId)
         {
@@ -41,22 +45,32 @@ namespace SurveyApp.API.Controllers
             return BadRequest();
         }
 
+        [Authorize(Roles = "User")]
         [HttpGet("/Surveys/{surveyId}/Analyzes")]
         public async Task<IActionResult> GetSurveyAnalysisBySurveyId(string surveyId)
         {
+            string? userId = User.Claims.FirstOrDefault(x => x.Type == "Id")?.Value;
+            if(userId == null) return Unauthorized();
+
             if (surveyId != null)
             {
                 bool isSurveyExists = await _surveyService.IsSurveyExistsAsync(surveyId);
                 if (isSurveyExists)
                 {
-                    var analysis = await _surveyResponseService.AnalyzeSurveyAsync(surveyId);
-                    return Ok(analysis);
+                    bool isUserSurveyOwner = await _surveyService.CheckSurveyOwnershipAsync(surveyId, userId);
+                    if (isUserSurveyOwner == true)
+                    {
+                        var analysis = await _surveyResponseService.AnalyzeSurveyAsync(surveyId);
+                        return Ok(analysis);
+                    }
+                    return Unauthorized();
                 }
                 return NotFound(new { message = $"Böyle bir anket bulunamadı." });
             }
             return BadRequest();
         }
 
+        [AllowAnonymous]
         [HttpPost("/Surveys/{surveyId}/CreateResponse")]
         public async Task<IActionResult> CreateSurveyResponse(SurveyResponseCreateRequest surveyResponse)
         {

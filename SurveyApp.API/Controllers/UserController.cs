@@ -22,6 +22,7 @@ namespace SurveyApp.API.Controllers
             this.key = _configuration.GetSection("JwtKey").ToString();
         }
 
+        [Authorize(Roles="Admin")]
         [HttpGet("/User/All")]
         public async Task<IActionResult> GetUsers()
         {
@@ -29,6 +30,7 @@ namespace SurveyApp.API.Controllers
             return Ok(users);
         }
 
+        [Authorize(Roles = "Admin, User")]
         [HttpGet("/User/{userId}")] 
         public async Task<IActionResult> GetUser(string userId)
         {
@@ -36,7 +38,8 @@ namespace SurveyApp.API.Controllers
             return Ok(user);
         }
 
-        [HttpPost("/User/SignIn")]
+        [AllowAnonymous]
+        [HttpPost("/User/SignUp")]
         public async Task<IActionResult> CreateNewUser(UserCreateRequest userCreateRequest)
         {
             if(ModelState.IsValid)
@@ -58,7 +61,7 @@ namespace SurveyApp.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                var token = _userService.Authenticate(userLoginRequest, key);
+                var token = await _userService.AuthenticateAsync(userLoginRequest, key);
                 if (token == null) 
                     return Unauthorized();
                 //TODO: userLoginResquest döndürmek yerine ne döndürülebilir?
@@ -67,6 +70,7 @@ namespace SurveyApp.API.Controllers
             return BadRequest();
         }
 
+        [Authorize(Roles = "Admin, User")]
         [HttpGet("/Account/{userId}/Info")]
         public async Task<IActionResult> GetUserAccountInfo(string userId)
         {
@@ -83,6 +87,7 @@ namespace SurveyApp.API.Controllers
             return BadRequest();
         }
 
+        [Authorize(Roles = "User")]
         [HttpPut("/Account/{userId}/UpdatePassword")]
         public async Task<IActionResult> UpdateUserPassword(UserUpdatePasswordRequest userUpdatePasswordRequest)
         {
@@ -94,6 +99,7 @@ namespace SurveyApp.API.Controllers
             return BadRequest(ModelState);
         }
 
+        [Authorize(Roles = "User")]
         [HttpPut("/Account/{userId}/UpdateEmail")]
         public async Task<IActionResult> UpdateEmail(UserUpdateEmailRequest userUpdateEmailRequest)
         {
@@ -110,7 +116,7 @@ namespace SurveyApp.API.Controllers
             return BadRequest(ModelState);
         }
 
-
+        [Authorize(Roles = "Admin, User")]
         [HttpDelete("/Account/{userId}/Delete")] 
         public async Task<IActionResult> DeleteUserAccount(string userId)
         {
