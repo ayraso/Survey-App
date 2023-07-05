@@ -1,4 +1,5 @@
 ﻿using SurveyApp.Application.DTOs.Requests.Survey;
+using SurveyApp.Application.DTOs.Responses.User;
 using SurveyApp.Domain.Entities.Surveys;
 using System;
 using System.Collections.Generic;
@@ -22,5 +23,6 @@ namespace SurveyApp.Application.Services.SurveyService
         bool IsSurveyExists(string surveyId);
         Task<bool> CheckSurveyOwnershipAsync(string surveyId, string userId);
         bool CheckSurveyOwnerShip(string surveyId, string userId);
+
     }
 }

@@ -176,5 +176,17 @@ namespace SurveyApp.Application.Services.UserService
 
             return tokenHandler.WriteToken(token);
         }
+
+        public async Task<UserDisplayResponse> GetUserAccountInfoAsync(string userId)
+        {
+            var user = await this.GetUserByIdAsync(userId);
+            return _mapper.Map<UserDisplayResponse>(user);
+        }
+
+        public UserDisplayResponse GetUserAccountInfo(string userId)
+        {
+            var user = this.GetUserById(userId);
+            return _mapper.Map<UserDisplayResponse>(user);
+        }
     }
 }

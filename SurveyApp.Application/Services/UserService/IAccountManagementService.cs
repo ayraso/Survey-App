@@ -16,6 +16,8 @@ namespace SurveyApp.Application.Services.UserService
         public void UpdateUserPassword(UserUpdatePasswordRequest userUpdatePasswordRequest);
         public Task<UserDisplayResponse> UpdateUserEmailAsync(UserUpdateEmailRequest userUpdateEmailRequest);
         public UserDisplayResponse UpdateUserEmail(UserUpdateEmailRequest userUpdateEmailRequest);
+        public Task<UserDisplayResponse> GetUserAccountInfoAsync(string userId);
+        public UserDisplayResponse GetUserAccountInfo(string userId);
 
     }
 }

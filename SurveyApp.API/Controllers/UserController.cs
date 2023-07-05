@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SurveyApp.API.Filters;
 using SurveyApp.Application.DTOs.Requests.User;
 using SurveyApp.Application.Services.UserService;
 using SurveyApp.Domain.Entities.Users;
@@ -30,10 +31,15 @@ namespace SurveyApp.API.Controllers
             return Ok(users);
         }
 
-        [Authorize(Roles = "Admin, User")]
-        [HttpGet("/User/{userId}")] 
+        [Authorize(Roles = "User")]
+        [HttpGet]
+        [Route("Get")]
+        [UserExistence]
+        //TODO: 24 digit hex string mi kontrolü ekle UserExistance attribute'una
+        // parametredeki userId ile claim deki aynı mı ? 
         public async Task<IActionResult> GetUser(string userId)
         {
+            //if(userId == null) { return BadRequest(); }
             var user = await _userService.GetUserByIdAsync(userId);
             return Ok(user);
         }
@@ -72,23 +78,16 @@ namespace SurveyApp.API.Controllers
 
         [Authorize(Roles = "Admin, User")]
         [HttpGet("/Account/{userId}/Info")]
+        [UserExistence]
         public async Task<IActionResult> GetUserAccountInfo(string userId)
-        {
-            if (userId != null)
-            {
-                bool isUserExists = await _userService.IsUserExistsAsync(userId);
-                if (isUserExists)
-                {
-                    var user = await _userService.GetUserByIdAsync(userId);
-                    return Ok(user);
-                }
-                return NotFound(new {message = $"Böyle bir kullanıcı bulunamadı."});
-            }
-            return BadRequest();
+        {  
+            var user = await _userService.GetUserAccountInfoAsync(userId);
+            return Ok(user);  
         }
 
         [Authorize(Roles = "User")]
         [HttpPut("/Account/{userId}/UpdatePassword")]
+        [UserExistence]
         public async Task<IActionResult> UpdateUserPassword(UserUpdatePasswordRequest userUpdatePasswordRequest)
         {
             if (ModelState.IsValid)
@@ -117,15 +116,12 @@ namespace SurveyApp.API.Controllers
         }
 
         [Authorize(Roles = "Admin, User")]
-        [HttpDelete("/Account/{userId}/Delete")] 
+        [HttpDelete("/Account/{userId}/Delete")]
+        [UserExistence]
         public async Task<IActionResult> DeleteUserAccount(string userId)
         {
-            if(userId != null)
-            {
-                await _userService.DeleteUserAccountAsync(userId);
-                return Ok();    
-            }
-            return BadRequest();
+            await _userService.DeleteUserAccountAsync(userId);
+            return Ok();
         }
 
     }

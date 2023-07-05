@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SurveyApp.API.Filters;
 using SurveyApp.Application.DTOs.Requests.Survey;
 using SurveyApp.Application.Services.SurveyService;
 using SurveyApp.Application.Services.UserService;
@@ -48,19 +49,15 @@ namespace SurveyApp.API.Controllers
 
         }
 
-        [Authorize(Roles = "Admin, User")]
+        [Authorize(Roles = "User")]
         [HttpGet("/Survey/User:{userId}")]
+        [UserExistence]
         public async Task<IActionResult> GetSurveysByUserId(string userId)
         {
             if (userId != null)
             {
-                bool isUserExists = await _userService.IsUserExistsAsync(userId);
-                if (isUserExists)
-                {
-                    var surveys = await _surveyService.GetSurveysByUserIdAsync(userId);
-                    return Ok(surveys);
-                }
-                return NotFound(new { message = $"Böyle bir kullanıcı bulunamadı." });
+               var surveys = await _surveyService.GetSurveysByUserIdAsync(userId);
+               return Ok(surveys);
             }
             return BadRequest();
         }
