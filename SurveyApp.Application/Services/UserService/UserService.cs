@@ -152,7 +152,7 @@ namespace SurveyApp.Application.Services.UserService
             return _userRepository.IsExists(UserId);    
         }
 
-        public async Task<string> AuthenticateAsync(UserLoginRequest loginRequest, string key)
+        public async Task<UserLoginResponse> AuthenticateAsync(UserLoginRequest loginRequest, string key)
         {
             var user = await this.ValidateUserAsync(loginRequest);
             if (user == null) return null;
@@ -173,8 +173,8 @@ namespace SurveyApp.Application.Services.UserService
                         SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
-
-            return tokenHandler.WriteToken(token);
+            UserLoginResponse userLoginResponse = new UserLoginResponse(user.Id, tokenHandler.WriteToken(token));
+            return userLoginResponse;
         }
 
         public async Task<UserDisplayResponse> GetUserAccountInfoAsync(string userId)

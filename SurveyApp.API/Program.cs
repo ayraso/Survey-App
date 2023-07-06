@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using SurveyApp.Application.Services.Common;
 
 var builder = WebApplication.CreateBuilder(args);
-//TODO: IEnumarable, IList gibi yapýlarý denetle.
+//TODO: IEnumarable, IList gibi yapýlarý yerinde kullanmaya çalýþ
 // Add services to the container.
 builder.Services.AddHttpContextAccessor();
 

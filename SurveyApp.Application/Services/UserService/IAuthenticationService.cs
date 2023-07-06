@@ -1,4 +1,5 @@
 ﻿using SurveyApp.Application.DTOs.Requests.User;
+using SurveyApp.Application.DTOs.Responses.User;
 using SurveyApp.Application.Services.Common;
 using SurveyApp.Domain.Entities.Users;
 using System;
@@ -13,6 +14,6 @@ namespace SurveyApp.Application.Services.UserService
     {
         public Task<User?> ValidateUserAsync(UserLoginRequest userLoginRequest);
         public User ValidateUser(UserLoginRequest userLoginRequest);
-        public Task<string> AuthenticateAsync(UserLoginRequest loginRequest, string key);
+        public Task<UserLoginResponse> AuthenticateAsync(UserLoginRequest loginRequest, string key);
     }
 }

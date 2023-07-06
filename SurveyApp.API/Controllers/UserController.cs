@@ -67,11 +67,10 @@ namespace SurveyApp.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                var token = await _userService.AuthenticateAsync(userLoginRequest, key);
-                if (token == null) 
+                var userLoginResponse = await _userService.AuthenticateAsync(userLoginRequest, key);
+                if (userLoginResponse == null) 
                     return Unauthorized();
-                //TODO: userLoginResquest döndürmek yerine ne döndürülebilir?
-                return Ok(new {token, userLoginRequest });
+                return Ok(new { userLoginResponse });
             }
             return BadRequest();
         }
