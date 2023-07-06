@@ -1,15 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SurveyApp.API.Filters;
 using SurveyApp.API.Filters.SurveyExistence;
 using SurveyApp.API.Filters.SurveyResourceAccess;
-using SurveyApp.Application.DTOs.Requests.Survey;
 using SurveyApp.Application.DTOs.Requests.SurveyResponse;
+using SurveyApp.Application.Services.CachingServices;
 using SurveyApp.Application.Services.SurveyResponseService;
-using SurveyApp.Application.Services.SurveyService;
-using SurveyApp.Application.Services.UserService;
-using SurveyApp.Domain.Entities.SurveyResponses;
-using System.Security.Claims;
+
 
 namespace SurveyApp.API.Controllers
 {
@@ -18,17 +14,14 @@ namespace SurveyApp.API.Controllers
     [Route("[controller]")]
     public class SurveyResponseController : ControllerBase
     {
-        private readonly ISurveyService _surveyService;
-        private readonly IUserService _userService;
         private readonly ISurveyResponseService _surveyResponseService;
+        private readonly IMemoryCacheService _cacheService;
 
-        public SurveyResponseController(ISurveyService surveyService,
-                                        IUserService userService,
-                                        ISurveyResponseService surveyResponseService)
+        public SurveyResponseController(ISurveyResponseService surveyResponseService,
+                                        IMemoryCacheService cacheService)
         {
-            this._surveyService = surveyService;
-            this._userService = userService;
             this._surveyResponseService = surveyResponseService;
+            this._cacheService = cacheService;
         }
 
         [Authorize(Roles = "User")]
@@ -40,7 +33,8 @@ namespace SurveyApp.API.Controllers
         {
             if(surveyId != null)
             {
-                var responses = await _surveyResponseService.GetSurveyResponsesBySurveyIdAsync(surveyId);
+                var responses = await _cacheService.GetOrCreateAsync($"Responses_{surveyId}", () =>
+                            _surveyResponseService.GetSurveyResponsesBySurveyIdAsync(surveyId), TimeSpan.FromMinutes(5));
                 return Ok(responses);
             }
             return BadRequest();
@@ -55,7 +49,8 @@ namespace SurveyApp.API.Controllers
         {
             if (surveyId != null)
             {
-                var analysis = await _surveyResponseService.GetSurveyAnalysisBySurveyIdAsync(surveyId);
+                var analysis = await _cacheService.GetOrCreateAsync($"Analysis_{surveyId}", () => 
+                            _surveyResponseService.GetSurveyAnalysisBySurveyIdAsync(surveyId), TimeSpan.FromMinutes(5));
                 return Ok(analysis);
             }
             return BadRequest();
@@ -69,6 +64,9 @@ namespace SurveyApp.API.Controllers
         {
             if (ModelState.IsValid)
             {
+                _cacheService.Remove($"Analysis_{surveyResponse.SurveyId}");
+                _cacheService.Remove($"Responses_{surveyResponse.SurveyId}");
+
                 await _surveyResponseService.CreateSurveyResponseAsync(surveyResponse);
                 return Ok();
             }

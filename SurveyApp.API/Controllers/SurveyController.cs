@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SurveyApp.API.Filters;
 using SurveyApp.API.Filters.SurveyExistence;
 using SurveyApp.API.Filters.UserExistence;
 using SurveyApp.API.Filters.UserResourceAccess;
@@ -8,8 +7,6 @@ using SurveyApp.Application.DTOs.Requests.Survey;
 using SurveyApp.Application.Services.CachingServices;
 using SurveyApp.Application.Services.SurveyService;
 using SurveyApp.Application.Services.UserService;
-using SurveyApp.Domain.Entities.Surveys;
-using SurveyApp.Domain.Entities.Users;
 using System.Net;
 
 namespace SurveyApp.API.Controllers
@@ -50,7 +47,6 @@ namespace SurveyApp.API.Controllers
         {
             if (surveyId != null)
             {
-                //var survey = await _surveyService.GetSurveyByIdAsync(surveyId);
                 var cacheKey = $"Survey_{surveyId}";
                 var survey = await _cacheService.GetOrCreateAsync(cacheKey, () =>
                 {

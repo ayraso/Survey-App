@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using SurveyApp.API.Filters.SurveyCaching;
 using SurveyApp.Application.Mappings;
 using SurveyApp.Application.Services.CachingServices;
 using SurveyApp.Application.Services.SurveyAnalyzer;

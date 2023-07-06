@@ -10,6 +10,7 @@ using SurveyApp.API.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Identity;
 using SurveyApp.Application.Services.Common;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,8 +22,17 @@ builder.Services.AddIoCServices();
 builder.Services.LoadMongoDbSettings(builder.Configuration);
 builder.Services.AddJWTAuthentication(builder.Configuration);
 
-
 builder.Services.AddControllers();
+//builder.Services.AddControllers(options =>
+//{
+//    options.CacheProfiles.Add("CustomCacheProfile", new CacheProfile
+//    {
+//        Duration = 60,
+//        Location = ResponseCacheLocation.Client,
+//        VaryByQueryKeys = new[] { "surveyId" }
+//    });
+//});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -30,6 +40,7 @@ builder.Services.AddMemoryCache();
 builder.Services.AddResponseCaching(options =>
 {
     options.SizeLimit = 100000;
+
 });
 
 var app = builder.Build();
