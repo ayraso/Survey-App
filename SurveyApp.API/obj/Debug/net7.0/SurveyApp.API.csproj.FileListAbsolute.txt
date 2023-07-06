@@ -119,3 +119,6 @@ C:\Users\ayser\source\repos\Survey-App\SurveyApp.API\bin\Debug\net7.0\Microsoft.
 C:\Users\ayser\source\repos\Survey-App\SurveyApp.API\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\ayser\source\repos\Survey-App\SurveyApp.API\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\ayser\source\repos\Survey-App\SurveyApp.API\bin\Debug\net7.0\System.Security.Permissions.dll
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.API\bin\Debug\net7.0\System.Net.Http.Formatting.dll
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.API\bin\Debug\net7.0\System.Web.Http.dll
+C:\Users\ayser\source\repos\Survey-App\SurveyApp.API\bin\Debug\net7.0\Newtonsoft.Json.Bson.dll

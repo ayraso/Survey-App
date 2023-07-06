@@ -36,7 +36,7 @@ namespace SurveyApp.API.Controllers
         [Route("Get")]
         [UserExistence]
         //TODO: 24 digit hex string mi kontrolü ekle UserExistance attribute'una
-        // parametredeki userId ile claim deki aynı mı ? 
+        [UserResourceAccess]
         public async Task<IActionResult> GetUser(string userId)
         {
             //if(userId == null) { return BadRequest(); }
@@ -88,6 +88,7 @@ namespace SurveyApp.API.Controllers
         [Authorize(Roles = "User")]
         [HttpPut("/Account/{userId}/UpdatePassword")]
         [UserExistence]
+        [UserResourceAccess]
         public async Task<IActionResult> UpdateUserPassword(UserUpdatePasswordRequest userUpdatePasswordRequest)
         {
             if (ModelState.IsValid)
@@ -100,6 +101,8 @@ namespace SurveyApp.API.Controllers
 
         [Authorize(Roles = "User")]
         [HttpPut("/Account/{userId}/UpdateEmail")]
+        [UserExistence]
+        [UserResourceAccess]
         public async Task<IActionResult> UpdateEmail(UserUpdateEmailRequest userUpdateEmailRequest)
         {
             if(ModelState.IsValid)
@@ -118,6 +121,7 @@ namespace SurveyApp.API.Controllers
         [Authorize(Roles = "Admin, User")]
         [HttpDelete("/Account/{userId}/Delete")]
         [UserExistence]
+        [UserResourceAccess]
         public async Task<IActionResult> DeleteUserAccount(string userId)
         {
             await _userService.DeleteUserAccountAsync(userId);

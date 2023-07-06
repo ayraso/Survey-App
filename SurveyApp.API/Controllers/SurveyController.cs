@@ -33,25 +33,21 @@ namespace SurveyApp.API.Controllers
 
         [AllowAnonymous]
         [HttpGet("/Survey/{surveyId}")]
+        [SurveyExistence]
         public async Task<IActionResult> GetSurveyById(string surveyId)
         {
             if (surveyId != null)
             {
-                bool isSurveyExists = await _surveyService.IsSurveyExistsAsync(surveyId);
-                if (isSurveyExists)
-                {
-                    var survey = await _surveyService.GetSurveyByIdAsync(surveyId);
-                    return Ok(survey);
-                }
-                return NotFound(new { message = $"Böyle bir survey bulunamadı." });
+                var survey = await _surveyService.GetSurveyByIdAsync(surveyId);
+                return Ok(survey);
             }
             return BadRequest();
-
         }
 
         [Authorize(Roles = "User")]
         [HttpGet("/Survey/User:{userId}")]
         [UserExistence]
+        [UserResourceAccess]
         public async Task<IActionResult> GetSurveysByUserId(string userId)
         {
             if (userId != null)
@@ -64,11 +60,13 @@ namespace SurveyApp.API.Controllers
 
         [Authorize(Roles = "Admin, User")]
         [HttpPost("/Survey/Create")]
-        public async Task<IActionResult> CreateSurvey(SurveyCreateRequest survey)
+        [UserExistence]
+        [UserResourceAccess]
+        public async Task<IActionResult> CreateSurvey(SurveyCreateRequest surveyCreateRequest)
         {
             if (ModelState.IsValid)
             {
-                await _surveyService.CreateSurveyAsync(survey);
+                await _surveyService.CreateSurveyAsync(surveyCreateRequest);
                 return Ok();
             }
             return BadRequest();

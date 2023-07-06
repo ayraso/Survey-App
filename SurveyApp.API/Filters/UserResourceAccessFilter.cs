@@ -2,20 +2,21 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using SurveyApp.Application.DTOs.Requests.Survey;
 using SurveyApp.Application.DTOs.Requests.User;
-using SurveyApp.Application.Services.UserService;
+using SurveyApp.Domain.Entities.Users;
+using System.Web.Http.Controllers;
 
 namespace SurveyApp.API.Filters
 {
-    public class UserExistenceFilter : IAsyncActionFilter
+    public class UserResourceAccessFilter : IAsyncActionFilter
     {
-        public readonly IUserService _userService;
-        public UserExistenceFilter(IUserService userService)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private string? claimUserId = null;
+        public UserResourceAccessFilter(IHttpContextAccessor httpContextAccessor) 
         {
-            _userService = userService;
+            this._httpContextAccessor = httpContextAccessor;
         }
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            //TODO: tip kontrolü de yap.
             var IsMethodWithUserIdParameter = context.ActionArguments.ContainsKey("userId");
             var IsMethodWithUserUpdatePasswordRequestParameter = context.ActionArguments.ContainsKey("userUpdatePasswordRequest");
             var IsMethodWithUserUpdateEmailRequestParameter = context.ActionArguments.ContainsKey("userUpdateEmailRequest");
@@ -26,34 +27,36 @@ namespace SurveyApp.API.Filters
             if (IsMethodWithUserIdParameter == true)
             {
                 userId = context.ActionArguments["userId"].ToString();
-                
+
             }
-            else if(IsMethodWithUserUpdatePasswordRequestParameter == true)
+            else if (IsMethodWithUserUpdatePasswordRequestParameter == true)
             {
                 var request = (UserUpdatePasswordRequest)context.ActionArguments["userUpdatePasswordRequest"];
                 userId = request.Id;
             }
-            else if(IsMethodWithUserUpdateEmailRequestParameter == true)
+            else if (IsMethodWithUserUpdateEmailRequestParameter == true)
             {
                 var request = (UserUpdateEmailRequest)context.ActionArguments["userUpdateEmailRequest"];
                 userId = request.Id;
             }
-            else if( IsMethodWithSurveyCreateRequestParameter == true)
+            else if (IsMethodWithSurveyCreateRequestParameter == true)
             {
                 var request = (SurveyCreateRequest)context.ActionArguments["surveyCreateRequest"];
                 userId = request.UserIdCreatedBy;
             }
 
-            var isUserExists = await _userService.IsUserExistsAsync(userId);
-            if (isUserExists == true)
+            this.claimUserId = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Id")?.Value;
+            var isUserHasAccessRight = false;
+            if (userId == claimUserId) isUserHasAccessRight = true;
+
+            if (isUserHasAccessRight == true)
             {
                 await next.Invoke();
             }
             else
             {
-                context.Result = new NotFoundObjectResult(new { message = $"No user found with provided id." });
+                context.Result = new UnauthorizedObjectResult(new { message = $"No access right for this resouce." });
             }
-
         }
     }
 }
