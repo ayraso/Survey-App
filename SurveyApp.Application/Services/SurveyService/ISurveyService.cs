@@ -11,8 +11,8 @@ namespace SurveyApp.Application.Services.SurveyService
 {
     public interface ISurveyService
     {
-        Task CreateSurveyAsync(SurveyCreateRequest surveyCreeateRequest);
-        void CreateSurvey(SurveyCreateRequest surveyCreeateRequest);
+        Task<string> CreateSurveyAsync(SurveyCreateRequest surveyCreeateRequest);
+        string CreateSurvey(SurveyCreateRequest surveyCreeateRequest);
         Task<IEnumerable<Survey?>> GetAllSurveysAsync();
         IEnumerable<Survey?> GetAllSurveys();
         Task<Survey?> GetSurveyByIdAsync(string surveyId);

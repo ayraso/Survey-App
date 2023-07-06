@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using SurveyApp.Application.Services.Common;
 
 var builder = WebApplication.CreateBuilder(args);
+
 //TODO: IEnumarable, IList gibi yapýlarý yerinde kullanmaya çalýþ
 // Add services to the container.
 builder.Services.AddHttpContextAccessor();
@@ -19,6 +20,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddIoCServices();
 builder.Services.LoadMongoDbSettings(builder.Configuration);
 builder.Services.AddJWTAuthentication(builder.Configuration);
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -31,6 +33,8 @@ builder.Services.AddResponseCaching(options =>
 });
 
 var app = builder.Build();
+
+;
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

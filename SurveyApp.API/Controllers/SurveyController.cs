@@ -6,6 +6,7 @@ using SurveyApp.Application.Services.SurveyService;
 using SurveyApp.Application.Services.UserService;
 using SurveyApp.Domain.Entities.Surveys;
 using SurveyApp.Domain.Entities.Users;
+using System.Net;
 
 namespace SurveyApp.API.Controllers
 {
@@ -24,7 +25,8 @@ namespace SurveyApp.API.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpGet("/Survey/All")]
+        [HttpGet]
+        [Route("/Surveys/All")]
         public async Task<IActionResult> GetSurveys()
         {
             var surveys = await _surveyService.GetAllSurveysAsync();
@@ -32,7 +34,8 @@ namespace SurveyApp.API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("/Survey/{surveyId}")]
+        [HttpGet]
+        [Route("/Surveys/{surveyId}")]
         [SurveyExistence]
         public async Task<IActionResult> GetSurveyById(string surveyId)
         {
@@ -45,7 +48,8 @@ namespace SurveyApp.API.Controllers
         }
 
         [Authorize(Roles = "User")]
-        [HttpGet("/Survey/User:{userId}")]
+        [HttpGet]
+        [Route("/Surveys/UserId:{userId}/All")]
         [UserExistence]
         [UserResourceAccess]
         public async Task<IActionResult> GetSurveysByUserId(string userId)
@@ -59,15 +63,19 @@ namespace SurveyApp.API.Controllers
         }
 
         [Authorize(Roles = "Admin, User")]
-        [HttpPost("/Survey/Create")]
+        [HttpPost]
+        [Route("/Surveys/Create")]
         [UserExistence]
         [UserResourceAccess]
         public async Task<IActionResult> CreateSurvey(SurveyCreateRequest surveyCreateRequest)
         {
             if (ModelState.IsValid)
             {
-                await _surveyService.CreateSurveyAsync(surveyCreateRequest);
-                return Ok();
+                string justCreatedSurveyId = await _surveyService.CreateSurveyAsync(surveyCreateRequest);
+                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.Created);
+                string uri = Url.ActionLink("GetSurveyById", "Survey", new {surveyId = justCreatedSurveyId });
+                response.Headers.Location = new Uri(uri);
+                return Ok(response);
             }
             return BadRequest();
         }

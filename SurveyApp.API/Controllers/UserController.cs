@@ -7,6 +7,7 @@ using SurveyApp.Domain.Entities.Users;
 
 namespace SurveyApp.API.Controllers
 {
+
     [Authorize]
     [ApiController]
     [Route("[controller]")]
@@ -24,7 +25,8 @@ namespace SurveyApp.API.Controllers
         }
 
         [Authorize(Roles="Admin")]
-        [HttpGet("/User/All")]
+        [HttpGet]
+        [Route("/Users/All")]
         public async Task<IActionResult> GetUsers()
         {
             var users = await _userService.GetAllUsersAsync();
@@ -33,7 +35,7 @@ namespace SurveyApp.API.Controllers
 
         [Authorize(Roles = "User")]
         [HttpGet]
-        [Route("Get")]
+        [Route("/Users/Id:{userId}")]
         [UserExistence]
         //TODO: 24 digit hex string mi kontrolü ekle UserExistance attribute'una
         [UserResourceAccess]
@@ -45,7 +47,8 @@ namespace SurveyApp.API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("/User/SignUp")]
+        [HttpPost]
+        [Route("/SignUp")]
         public async Task<IActionResult> CreateNewUser(UserCreateRequest userCreateRequest)
         {
             if(ModelState.IsValid)
@@ -62,7 +65,8 @@ namespace SurveyApp.API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("/User/Login")]
+        [HttpPost]
+        [Route("/Login")]
         public async Task<IActionResult> Login(UserLoginRequest userLoginRequest)
         {
             if (ModelState.IsValid)
@@ -76,7 +80,8 @@ namespace SurveyApp.API.Controllers
         }
 
         [Authorize(Roles = "Admin, User")]
-        [HttpGet("/Account/{userId}/Info")]
+        [HttpGet]
+        [Route("/Users/{userId}/Account/Info")]
         [UserExistence]
         public async Task<IActionResult> GetUserAccountInfo(string userId)
         {  
@@ -85,7 +90,8 @@ namespace SurveyApp.API.Controllers
         }
 
         [Authorize(Roles = "User")]
-        [HttpPut("/Account/{userId}/UpdatePassword")]
+        [HttpPut]
+        [Route("/Users/{userId}/Account/UpdatePassword")]
         [UserExistence]
         [UserResourceAccess]
         public async Task<IActionResult> UpdateUserPassword(UserUpdatePasswordRequest userUpdatePasswordRequest)
@@ -99,7 +105,8 @@ namespace SurveyApp.API.Controllers
         }
 
         [Authorize(Roles = "User")]
-        [HttpPut("/Account/{userId}/UpdateEmail")]
+        [HttpPut]
+        [Route("/Users/{userId}/Account/UpdateEmail")]
         [UserExistence]
         [UserResourceAccess]
         public async Task<IActionResult> UpdateEmail(UserUpdateEmailRequest userUpdateEmailRequest)
@@ -118,7 +125,8 @@ namespace SurveyApp.API.Controllers
         }
 
         [Authorize(Roles = "Admin, User")]
-        [HttpDelete("/Account/{userId}/Delete")]
+        [HttpDelete]
+        [Route("/Users/{userId}/Account/Delete")]
         [UserExistence]
         [UserResourceAccess]
         public async Task<IActionResult> DeleteUserAccount(string userId)

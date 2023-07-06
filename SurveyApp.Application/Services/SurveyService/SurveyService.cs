@@ -27,7 +27,7 @@ namespace SurveyApp.Application.Services.SurveyService
             _mapper = mapper;
         }
         //TODO: requestten question oluşturma işleminde factory kullanmaya çalış
-        public void CreateSurvey(SurveyCreateRequest newSurvey)
+        public string CreateSurvey(SurveyCreateRequest newSurvey)
         {
             Survey survey = _mapper.Map<Survey>(newSurvey);
 
@@ -76,9 +76,10 @@ namespace SurveyApp.Application.Services.SurveyService
             }
 
             _surveyRepository.Add(survey);
+            return survey.Id;
         }
 
-        public async Task CreateSurveyAsync(SurveyCreateRequest newSurvey)
+        public async Task<string> CreateSurveyAsync(SurveyCreateRequest newSurvey)
         {
             Survey survey = _mapper.Map<Survey>(newSurvey);
 
@@ -127,6 +128,7 @@ namespace SurveyApp.Application.Services.SurveyService
             }
 
             await _surveyRepository.AddAsync(survey);
+            return survey.Id;
         }
 
         public IEnumerable<Survey?> GetAllSurveys()

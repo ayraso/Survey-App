@@ -30,7 +30,8 @@ namespace SurveyApp.API.Controllers
         }
 
         [Authorize(Roles = "User")]
-        [HttpGet("/Surveys/{surveyId}/Responses")]
+        [HttpGet]
+        [Route("/Surveys/{surveyId}/Responses")]
         [SurveyExistence]
         [SurveyResourceAccess]
         public async Task<IActionResult> GetResponsesBySurveyId(string surveyId)
@@ -44,7 +45,8 @@ namespace SurveyApp.API.Controllers
         }
 
         [Authorize(Roles = "User")]
-        [HttpGet("/Surveys/{surveyId}/Analyzes")]
+        [HttpGet]
+        [Route("/Surveys/{surveyId}/Analyzes")]
         [SurveyExistence]
         [SurveyResourceAccess]
         public async Task<IActionResult> GetSurveyAnalysisBySurveyId(string surveyId)
@@ -58,7 +60,8 @@ namespace SurveyApp.API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("/Surveys/{surveyId}/CreateResponse")]
+        [HttpPost]
+        [Route("/Surveys/{surveyId}/SendResponse")]
         [SurveyExistence]
         public async Task<IActionResult> CreateSurveyResponse(SurveyResponseCreateRequest surveyResponse)
         {
