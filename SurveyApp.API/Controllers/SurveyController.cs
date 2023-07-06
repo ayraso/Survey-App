@@ -17,16 +17,13 @@ namespace SurveyApp.API.Controllers
     public class SurveyController : ControllerBase
     {
         private readonly ISurveyService _surveyService;
-        private readonly IUserService _userService;
         private readonly IMemoryCacheService _cacheService;
 
 
         public SurveyController(ISurveyService surveyService, 
-                                IUserService userService,
                                 IMemoryCacheService cacheService)
         {
             this._surveyService = surveyService;
-            this._userService = userService;
             this._cacheService = cacheService;
         }
 

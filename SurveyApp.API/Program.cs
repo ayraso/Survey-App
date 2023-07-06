@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//TODO: IEnumarable, IList gibi yapýlarý yerinde kullanmaya çalýþ
 // Add services to the container.
 builder.Services.AddHttpContextAccessor();
 
@@ -23,15 +22,6 @@ builder.Services.LoadMongoDbSettings(builder.Configuration);
 builder.Services.AddJWTAuthentication(builder.Configuration);
 
 builder.Services.AddControllers();
-//builder.Services.AddControllers(options =>
-//{
-//    options.CacheProfiles.Add("CustomCacheProfile", new CacheProfile
-//    {
-//        Duration = 60,
-//        Location = ResponseCacheLocation.Client,
-//        VaryByQueryKeys = new[] { "surveyId" }
-//    });
-//});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -44,8 +34,6 @@ builder.Services.AddResponseCaching(options =>
 });
 
 var app = builder.Build();
-
-;
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
