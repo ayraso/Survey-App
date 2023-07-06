@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SurveyApp.API.Filters;
 using SurveyApp.API.Filters.UserExistence;
 using SurveyApp.API.Filters.UserResourceAccess;
 using SurveyApp.Application.DTOs.Requests.User;
 using SurveyApp.Application.Services.UserService;
-using SurveyApp.Domain.Entities.Users;
 
 namespace SurveyApp.API.Controllers
 {

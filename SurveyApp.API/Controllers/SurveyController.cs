@@ -6,7 +6,6 @@ using SurveyApp.API.Filters.UserResourceAccess;
 using SurveyApp.Application.DTOs.Requests.Survey;
 using SurveyApp.Application.Services.CachingServices;
 using SurveyApp.Application.Services.SurveyService;
-using SurveyApp.Application.Services.UserService;
 using System.Net;
 
 namespace SurveyApp.API.Controllers
