@@ -51,7 +51,7 @@ namespace SurveyApp.API.Controllers
         {
             if (surveyId != null)
             {
-                var analysis = await _surveyResponseService.AnalyzeSurveyAsync(surveyId);
+                var analysis = await _surveyResponseService.GetSurveyAnalysisBySurveyIdAsync(surveyId);
                 return Ok(analysis);
             }
             return BadRequest();

@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SurveyApp.Application.Services.SurveyResponseService
+namespace SurveyApp.Application.Services.SurveyAnalyzer
 {
     public interface ISurveyAnalyzer
     {
         Task<SurveyAnalysisResponse> AnalyzeSurveyAsync(string surveyId);
+        List<AnswerAnalyze> AnalyzeAnswers(List<string> questionAnswers);
     }
 }

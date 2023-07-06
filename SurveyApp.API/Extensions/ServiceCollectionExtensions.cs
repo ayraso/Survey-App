@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using SurveyApp.Application.Mappings;
+using SurveyApp.Application.Services.SurveyAnalyzer;
 using SurveyApp.Application.Services.SurveyResponseService;
 using SurveyApp.Application.Services.SurveyService;
 using SurveyApp.Application.Services.UserService;
 using SurveyApp.Infrastructure.Data;
 using System.Text;
+using ISurveyAnalyzer = SurveyApp.Application.Services.SurveyAnalyzer.ISurveyAnalyzer;
 
 namespace SurveyApp.API.Extensions
 {
@@ -16,6 +18,7 @@ namespace SurveyApp.API.Extensions
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ISurveyService, SurveyService>();
             services.AddScoped<ISurveyResponseService, SurveyResponseService>();
+            services.AddScoped<ISurveyAnalyzer, SurveyAnalyzer>();
 
             services.AddAutoMapper(typeof(MappingProfile));
         }

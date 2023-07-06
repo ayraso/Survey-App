@@ -13,8 +13,6 @@ using SurveyApp.Application.Services.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 //TODO: IEnumarable, IList gibi yapýlarý denetle.
-//TODO: Authorization için middleware ekle.
-//TODO: anket sonuçlarýný ve analizini talep eden kiþi anketin sahibi veya admin mi diye kontrol et.
 // Add services to the container.
 builder.Services.AddHttpContextAccessor();
 
