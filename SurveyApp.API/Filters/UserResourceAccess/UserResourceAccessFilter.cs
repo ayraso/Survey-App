@@ -5,15 +5,15 @@ using SurveyApp.Application.DTOs.Requests.User;
 using SurveyApp.Domain.Entities.Users;
 using System.Web.Http.Controllers;
 
-namespace SurveyApp.API.Filters
+namespace SurveyApp.API.Filters.UserResourceAccess
 {
     public class UserResourceAccessFilter : IAsyncActionFilter
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private string? claimUserId = null;
-        public UserResourceAccessFilter(IHttpContextAccessor httpContextAccessor) 
+        public UserResourceAccessFilter(IHttpContextAccessor httpContextAccessor)
         {
-            this._httpContextAccessor = httpContextAccessor;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
@@ -45,7 +45,7 @@ namespace SurveyApp.API.Filters
                 userId = request.UserIdCreatedBy;
             }
 
-            this.claimUserId = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Id")?.Value;
+            claimUserId = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Id")?.Value;
             var isUserHasAccessRight = false;
             if (userId == claimUserId) isUserHasAccessRight = true;
 

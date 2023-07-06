@@ -5,7 +5,7 @@ using SurveyApp.Application.DTOs.Requests.User;
 using SurveyApp.Application.Services.SurveyService;
 using SurveyApp.Domain.Entities.Users;
 
-namespace SurveyApp.API.Filters
+namespace SurveyApp.API.Filters.SurveyExistence
 {
     public class SurveyExistenceFilter : IAsyncActionFilter
     {

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SurveyApp.API.Filters;
+using SurveyApp.API.Filters.SurveyExistence;
+using SurveyApp.API.Filters.SurveyResourceAccess;
 using SurveyApp.Application.DTOs.Requests.Survey;
 using SurveyApp.Application.DTOs.Requests.SurveyResponse;
 using SurveyApp.Application.Services.SurveyResponseService;

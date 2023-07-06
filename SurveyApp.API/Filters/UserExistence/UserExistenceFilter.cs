@@ -4,7 +4,7 @@ using SurveyApp.Application.DTOs.Requests.Survey;
 using SurveyApp.Application.DTOs.Requests.User;
 using SurveyApp.Application.Services.UserService;
 
-namespace SurveyApp.API.Filters
+namespace SurveyApp.API.Filters.UserExistence
 {
     public class UserExistenceFilter : IAsyncActionFilter
     {
@@ -26,19 +26,19 @@ namespace SurveyApp.API.Filters
             if (IsMethodWithUserIdParameter == true)
             {
                 userId = context.ActionArguments["userId"].ToString();
-                
+
             }
-            else if(IsMethodWithUserUpdatePasswordRequestParameter == true)
+            else if (IsMethodWithUserUpdatePasswordRequestParameter == true)
             {
                 var request = (UserUpdatePasswordRequest)context.ActionArguments["userUpdatePasswordRequest"];
                 userId = request.Id;
             }
-            else if(IsMethodWithUserUpdateEmailRequestParameter == true)
+            else if (IsMethodWithUserUpdateEmailRequestParameter == true)
             {
                 var request = (UserUpdateEmailRequest)context.ActionArguments["userUpdateEmailRequest"];
                 userId = request.Id;
             }
-            else if( IsMethodWithSurveyCreateRequestParameter == true)
+            else if (IsMethodWithSurveyCreateRequestParameter == true)
             {
                 var request = (SurveyCreateRequest)context.ActionArguments["surveyCreateRequest"];
                 userId = request.UserIdCreatedBy;

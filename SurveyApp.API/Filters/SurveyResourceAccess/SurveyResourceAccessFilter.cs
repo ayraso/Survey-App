@@ -4,7 +4,7 @@ using SurveyApp.Application.Services.SurveyService;
 using SurveyApp.Application.Services.UserService;
 using SurveyApp.Domain.Entities.Users;
 
-namespace SurveyApp.API.Filters
+namespace SurveyApp.API.Filters.SurveyResourceAccess
 {
     public class SurveyResourceAccessFilter : IAsyncActionFilter
     {
@@ -13,14 +13,14 @@ namespace SurveyApp.API.Filters
         private string? claimUserId = null;
         public SurveyResourceAccessFilter(IHttpContextAccessor httpContextAccessor, ISurveyService surveyService)
         {
-            this._httpContextAccessor = httpContextAccessor;
-            this._surveyService = surveyService;
+            _httpContextAccessor = httpContextAccessor;
+            _surveyService = surveyService;
         }
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             var IsMethodWithSurveyIdParameter = context.ActionArguments.ContainsKey("surveyId");
 
-            this.claimUserId = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Id")?.Value;
+            claimUserId = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Id")?.Value;
             string surveyId = null;
 
             if (IsMethodWithSurveyIdParameter == true)

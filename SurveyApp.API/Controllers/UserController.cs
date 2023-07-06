@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SurveyApp.API.Filters;
+using SurveyApp.API.Filters.UserExistence;
+using SurveyApp.API.Filters.UserResourceAccess;
 using SurveyApp.Application.DTOs.Requests.User;
 using SurveyApp.Application.Services.UserService;
 using SurveyApp.Domain.Entities.Users;
@@ -85,6 +87,7 @@ namespace SurveyApp.API.Controllers
         [UserExistence]
         public async Task<IActionResult> GetUserAccountInfo(string userId)
         {  
+            if (userId == null) return BadRequest();
             var user = await _userService.GetUserAccountInfoAsync(userId);
             return Ok(user);  
         }
@@ -131,6 +134,7 @@ namespace SurveyApp.API.Controllers
         [UserResourceAccess]
         public async Task<IActionResult> DeleteUserAccount(string userId)
         {
+            if (userId == null) return BadRequest();
             await _userService.DeleteUserAccountAsync(userId);
             return Ok();
         }

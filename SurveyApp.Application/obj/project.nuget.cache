@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "qdroUeobitHJeBRUa4bYXY7yf0nbaFOW17WccDwibnDUPFqcuyUuXKLgqwJy3taHE+NuihU2Vi8pV6kQX5mO4A==",
+  "dgSpecHash": "SMp+5vmbQtAs3cYkY3rJM1sCI9guHEczyx9dLgsSK5nxEPPxi0V6xdPsjCpzXoqH/QYHlgUFlakYptf8pOayTQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\ayser\\source\\repos\\Survey-App\\SurveyApp.Application\\SurveyApp.Application.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,7 @@
     "C:\\Users\\ayser\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",
     "C:\\Users\\ayser\\.nuget\\packages\\jsonsubtypes\\2.0.1\\jsonsubtypes.2.0.1.nupkg.sha512",
     "C:\\Users\\ayser\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
+    "C:\\Users\\ayser\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\7.0.0\\microsoft.extensions.caching.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\ayser\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\ayser\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\2.0.0\\microsoft.extensions.logging.abstractions.2.0.0.nupkg.sha512",
     "C:\\Users\\ayser\\.nuget\\packages\\microsoft.extensions.options\\7.0.1\\microsoft.extensions.options.7.0.1.nupkg.sha512",

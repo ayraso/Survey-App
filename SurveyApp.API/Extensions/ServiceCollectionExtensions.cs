@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using SurveyApp.API.Filters.SurveyCaching;
 using SurveyApp.Application.Mappings;
+using SurveyApp.Application.Services.CachingServices;
 using SurveyApp.Application.Services.SurveyAnalyzer;
 using SurveyApp.Application.Services.SurveyResponseService;
 using SurveyApp.Application.Services.SurveyService;
@@ -19,6 +21,7 @@ namespace SurveyApp.API.Extensions
             services.AddScoped<ISurveyService, SurveyService>();
             services.AddScoped<ISurveyResponseService, SurveyResponseService>();
             services.AddScoped<ISurveyAnalyzer, SurveyAnalyzer>();
+            services.AddScoped<IMemoryCacheService, MemoryCacheService>();
 
             services.AddAutoMapper(typeof(MappingProfile));
         }
@@ -30,7 +33,6 @@ namespace SurveyApp.API.Extensions
         {
             services.AddAuthentication(x =>
             {
-                //TODO: JWT ve ChallengeScheme ne demek öğren
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })

@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SurveyApp.API.Filters;
+using SurveyApp.API.Filters.SurveyExistence;
+using SurveyApp.API.Filters.UserExistence;
+using SurveyApp.API.Filters.UserResourceAccess;
 using SurveyApp.Application.DTOs.Requests.Survey;
+using SurveyApp.Application.Services.CachingServices;
 using SurveyApp.Application.Services.SurveyService;
 using SurveyApp.Application.Services.UserService;
 using SurveyApp.Domain.Entities.Surveys;
@@ -16,12 +20,17 @@ namespace SurveyApp.API.Controllers
     public class SurveyController : ControllerBase
     {
         private readonly ISurveyService _surveyService;
-        private readonly IUserService _userService; 
+        private readonly IUserService _userService;
+        private readonly IMemoryCacheService _cacheService;
 
-        public SurveyController(ISurveyService surveyService, IUserService userService)
+
+        public SurveyController(ISurveyService surveyService, 
+                                IUserService userService,
+                                IMemoryCacheService cacheService)
         {
             this._surveyService = surveyService;
             this._userService = userService;
+            this._cacheService = cacheService;
         }
 
         [Authorize(Roles = "Admin")]
@@ -41,7 +50,13 @@ namespace SurveyApp.API.Controllers
         {
             if (surveyId != null)
             {
-                var survey = await _surveyService.GetSurveyByIdAsync(surveyId);
+                //var survey = await _surveyService.GetSurveyByIdAsync(surveyId);
+                var cacheKey = $"Survey_{surveyId}";
+                var survey = await _cacheService.GetOrCreateAsync(cacheKey, () =>
+                {
+                    return _surveyService.GetSurveyByIdAsync(surveyId);
+                }, TimeSpan.FromMinutes(5));
+
                 return Ok(survey);
             }
             return BadRequest();
