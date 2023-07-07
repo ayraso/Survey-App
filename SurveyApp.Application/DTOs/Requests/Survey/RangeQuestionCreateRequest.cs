@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace SurveyApp.Application.DTOs.Requests.Survey
 {
-    //TODO: questionCreateRequest base i yaratıp bunların yaratım işlemini otomatize edebilir miyiz diye düşün
     public class RangeQuestionCreateRequest
     {
         public string Type { get; set; } = null!;

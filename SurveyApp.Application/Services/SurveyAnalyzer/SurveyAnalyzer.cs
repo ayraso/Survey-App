@@ -85,7 +85,6 @@ namespace SurveyApp.Application.Services.SurveyAnalyzer
                 // ilgili sorunun tipini buldum
                 Question question = survey.Questions.SingleOrDefault(q => q.Index == questionIndex);
                 string questionType = question.Type;
-                //TODO: questionAnalizResponse yaratımı için constructor yapmalı mıyım?
                 if (questionType == "LongAnswer")
                 {
                     // ilgili soru için verilmiş tüm cevapları analiz nesnesi içindeki Answers a at

@@ -26,7 +26,6 @@ namespace SurveyApp.Application.Services.SurveyService
             _surveyRepository = new MongoDbRepository<Survey>(mongoDbSettings);
             _mapper = mapper;
         }
-        //TODO: requestten question oluşturma işleminde factory kullanmaya çalış
         public string CreateSurvey(SurveyCreateRequest newSurvey)
         {
             Survey survey = _mapper.Map<Survey>(newSurvey);

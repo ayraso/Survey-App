@@ -15,7 +15,6 @@ namespace SurveyApp.API.Filters.UserExistence
         }
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            //TODO: tip kontrolü de yap.
             var IsMethodWithUserIdParameter = context.ActionArguments.ContainsKey("userId");
             var IsMethodWithUserUpdatePasswordRequestParameter = context.ActionArguments.ContainsKey("userUpdatePasswordRequest");
             var IsMethodWithUserUpdateEmailRequestParameter = context.ActionArguments.ContainsKey("userUpdateEmailRequest");

@@ -37,8 +37,6 @@ namespace SurveyApp.API.Controllers
         [HttpGet]
         [Route("/Users/{userId}")]
         [UserExistence]
-        //TODO: 24 digit hex string mi kontrolü ekle UserExistance attribute'una
-        //TODO: ModelSatate ve null check'leri filter'a ekle
         [UserResourceAccess]
         public async Task<IActionResult> GetUser(string userId)
         {

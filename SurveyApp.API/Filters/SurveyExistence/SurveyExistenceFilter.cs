@@ -17,7 +17,6 @@ namespace SurveyApp.API.Filters.SurveyExistence
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             string surveyId = null;
-            //TODO: tip kontrolü de yap.
             var IsMethodWithSurveyParameter = context.ActionArguments.ContainsKey("surveyId");
             var IsMethodWithSurveyResponseCreateRequestParameter = context.ActionArguments.ContainsKey("surveyResponse");
 
