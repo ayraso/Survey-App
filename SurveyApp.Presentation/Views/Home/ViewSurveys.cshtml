@@ -1,0 +1,29 @@
+﻿@model SurveyApp.Presentation.Models.SurveyRelatedModels.ViewSurveysModel
+
+@{
+    ViewData["Title"] = "ViewSurveys";
+}
+
+<h1>Surveys</h1>
+
+@if (Model != null && Model.Surveys != null && Model.Surveys.Count > 0)
+{
+    <ul>
+        @foreach (var survey in Model.Surveys)
+        {
+            <li>
+                <h2>@survey.Title</h2>
+                <p>@survey.Description</p>
+                <p>Created At: @survey.CreatedAt</p>
+                <p>
+                    @Html.ActionLink("View Details", "SurveyDetails", new { id = survey.Id })
+                </p>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No surveys available.</p>
+}
+

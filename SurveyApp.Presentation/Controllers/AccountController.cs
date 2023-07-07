@@ -2,8 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using SurveyApp.Application.DTOs.Requests.User;
-using SurveyApp.Application.DTOs.Responses.User;
+using SurveyApp.Presentation.Models;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
@@ -19,7 +18,7 @@ namespace SurveyApp.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(UserLoginRequest userLoginRequest)
+        public async Task<IActionResult> Login(UserLoginModel userLoginRequest)
         {
             using(var httpClient = new HttpClient())
             {
@@ -29,24 +28,26 @@ namespace SurveyApp.Presentation.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         string apiResponse = await response.Content.ReadAsStringAsync();
-                        var userLoginResponse = JsonConvert.DeserializeObject<UserLoginResponse>(apiResponse);
+                        var userLoginResponse = JsonConvert.DeserializeObject<LoggedInUser>(apiResponse);
 
                         HttpContext.Session.SetString("UserId", userLoginResponse.Id);
                         HttpContext.Session.SetString("Token", userLoginResponse.Token);
+
+                        return RedirectToAction("Index", "Home");
+
                     }
                     else if (response.StatusCode == HttpStatusCode.Unauthorized)
                     {
-                        // Unauthorized durumuna göre işlem yapabilirsiniz
+                        return RedirectToAction("Index");
                     }
                     else
                     {
-                        // Hata durumuna göre işlem yapabilirsiniz
+                        return RedirectToAction("Index");
                     }
 
 
                 }
             }
-            return RedirectToAction("Index");
         }
 
 
