@@ -35,7 +35,7 @@ namespace SurveyApp.API.Controllers
 
         [Authorize(Roles = "User")]
         [HttpGet]
-        [Route("/Users/Id:{userId}")]
+        [Route("/Users/{userId}")]
         [UserExistence]
         //TODO: 24 digit hex string mi kontrolü ekle UserExistance attribute'una
         //TODO: ModelSatate ve null check'leri filter'a ekle
