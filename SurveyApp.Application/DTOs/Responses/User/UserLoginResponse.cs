@@ -8,8 +8,10 @@ namespace SurveyApp.Application.DTOs.Responses.User
 {
     public class UserLoginResponse
     {
-        public string Id { get; set; }
-        public string Token { get; set; }
+        public string? Id { get; set; }
+        public string? Token { get; set; }
+
+        public UserLoginResponse() { }
         public UserLoginResponse(string id, string token)
         {
             Id = id;

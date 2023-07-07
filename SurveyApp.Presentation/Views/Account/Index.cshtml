@@ -1,0 +1,33 @@
+﻿@model SurveyApp.Application.DTOs.Requests.User.UserLoginRequest
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Login</h1>
+
+@using (Html.BeginForm())
+{
+
+    <div>
+        <label for="tin">E-mail:</label>
+        @Html.TextBoxFor(model => model.Email)
+        @Html.ValidationMessageFor(model => model.Email)
+    </div>
+
+    <div>
+        <label for="pswd">Şifre:</label>
+        @Html.PasswordFor(model => model.Password)
+        @Html.ValidationMessageFor(model => model.Password)
+    </div>
+
+    <button type="submit" asp-controller="Account" asp-action="Login" method="post">
+        Giriş
+    </button>
+
+}
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <p>@ViewBag.ErrorMessage</p>
+}
+

@@ -75,7 +75,7 @@ namespace SurveyApp.API.Controllers
                 var userLoginResponse = await _userService.AuthenticateAsync(userLoginRequest, key);
                 if (userLoginResponse == null) 
                     return Unauthorized();
-                return Ok(new { userLoginResponse });
+                return Ok(userLoginResponse);
             }
             return BadRequest();
         }
